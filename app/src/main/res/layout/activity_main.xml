@@ -20,4 +20,10 @@
         android:layout_height="wrap_content"
         android:text="简单三角形2" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="顶点缓冲区对象" />
+
 </LinearLayout>
