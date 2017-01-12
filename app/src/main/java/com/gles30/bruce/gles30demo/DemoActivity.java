@@ -3,7 +3,6 @@ package com.gles30.bruce.gles30demo;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 
 /**
  * Update by sunhongzhi on 2017/1/7.
@@ -16,9 +15,18 @@ public class DemoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int type = getIntent().getIntExtra(MainActivity.TYPE, 0);
+
         surfaceView = new GLSurfaceView(this);
         surfaceView.setEGLContextClientVersion(3);
-        surfaceView.setRenderer(new TriangleRender(this));
+        switch (type) {
+            case 0:
+                surfaceView.setRenderer(new TriangleRender(this));
+                break;
+            case 1:
+                surfaceView.setRenderer(new Triangle2Render(this));
+                break;
+        }
         setContentView(surfaceView);
     }
 
