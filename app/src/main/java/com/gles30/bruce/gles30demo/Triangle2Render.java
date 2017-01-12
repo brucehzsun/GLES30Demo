@@ -73,7 +73,7 @@ class Triangle2Render implements GLSurfaceView.Renderer {
 
         GLES30.glVertexAttrib4f(0, 1.0f, 0.0f, 0.0f, 1.0f);
 
-        GLES30.glVertexAttribPointer(1, 3, GLES30.GL_FLOAT, false, 0, vertextBuffer);
+        GLES30.glVertexAttribPointer(1, 3, GLES30.GL_HALF_FLOAT, false, 0, vertextBuffer);
         GLES30.glEnableVertexAttribArray(1);
 
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 3);
