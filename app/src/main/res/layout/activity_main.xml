@@ -26,4 +26,10 @@
         android:layout_height="wrap_content"
         android:text="顶点缓冲区对象" />
 
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="旋转立方体" />
+
 </LinearLayout>

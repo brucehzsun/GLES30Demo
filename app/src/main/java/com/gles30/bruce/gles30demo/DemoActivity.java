@@ -29,6 +29,9 @@ public class DemoActivity extends Activity {
             case 2:
                 surfaceView.setRenderer(new VertexBufferObjRender(this));
                 break;
+            case 3:
+                surfaceView.setRenderer(new SimpleVertexShaderRender(this));
+                break;
         }
         setContentView(surfaceView);
     }
