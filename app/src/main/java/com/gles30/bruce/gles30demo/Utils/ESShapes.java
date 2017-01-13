@@ -43,175 +43,268 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
-public class ESShapes
-{
+public class ESShapes {
 
-   public int genSphere ( int numSlices, float radius )
-   {
-      int i;
-      int j;
-      int numParallels = numSlices;
-      int numVertices = ( numParallels + 1 ) * ( numSlices + 1 );
-      int numIndices = numParallels * numSlices * 6;
-      float angleStep = ( ( 2.0f * ( float ) Math.PI ) / numSlices );
+    // Member variables
+    private FloatBuffer mVertices;
+    private FloatBuffer mNormals;
+    private FloatBuffer mTexCoords;
+    private ShortBuffer mIndices;
+    private int mNumIndices;
 
-      // Allocate memory for buffers
-      mVertices = ByteBuffer.allocateDirect ( numVertices * 3 * 4 )
-                  .order ( ByteOrder.nativeOrder() ).asFloatBuffer();
-      mNormals = ByteBuffer.allocateDirect ( numVertices * 3 * 4 )
-                 .order ( ByteOrder.nativeOrder() ).asFloatBuffer();
-      mTexCoords = ByteBuffer.allocateDirect ( numVertices * 2 * 4 )
-                   .order ( ByteOrder.nativeOrder() ).asFloatBuffer();
-      mIndices = ByteBuffer.allocateDirect ( numIndices * 2 )
-                 .order ( ByteOrder.nativeOrder() ).asShortBuffer();
+    public FloatBuffer getmColors() {
+        return mColors;
+    }
 
-      for ( i = 0; i < numParallels + 1; i++ )
-      {
-         for ( j = 0; j < numSlices + 1; j++ )
-         {
-            int vertex = ( i * ( numSlices + 1 ) + j ) * 3;
+    private FloatBuffer mColors;
 
-            mVertices
-            .put ( vertex + 0,
-                   ( float ) ( radius
-                               * Math.sin ( angleStep * ( float ) i ) * Math
-                               .sin ( angleStep * ( float ) j ) ) );
+    public int genSphere(int numSlices, float radius) {
+        int i;
+        int j;
+        int numParallels = numSlices;
+        int numVertices = (numParallels + 1) * (numSlices + 1);
+        int numIndices = numParallels * numSlices * 6;
+        float angleStep = ((2.0f * (float) Math.PI) / numSlices);
 
-            mVertices.put ( vertex + 1,
-                            ( float ) ( radius * Math.cos ( angleStep * ( float ) i ) ) );
-            mVertices
-            .put ( vertex + 2,
-                   ( float ) ( radius
-                               * Math.sin ( angleStep * ( float ) i ) * Math
-                               .cos ( angleStep * ( float ) j ) ) );
+        // Allocate memory for buffers
+        mVertices = ByteBuffer.allocateDirect(numVertices * 3 * 4)
+                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mNormals = ByteBuffer.allocateDirect(numVertices * 3 * 4)
+                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mTexCoords = ByteBuffer.allocateDirect(numVertices * 2 * 4)
+                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mIndices = ByteBuffer.allocateDirect(numIndices * 2)
+                .order(ByteOrder.nativeOrder()).asShortBuffer();
 
-            mNormals.put ( vertex + 0, mVertices.get ( vertex + 0 ) / radius );
-            mNormals.put ( vertex + 1, mVertices.get ( vertex + 1 ) / radius );
-            mNormals.put ( vertex + 2, mVertices.get ( vertex + 2 ) / radius );
+        for (i = 0; i < numParallels + 1; i++) {
+            for (j = 0; j < numSlices + 1; j++) {
+                int vertex = (i * (numSlices + 1) + j) * 3;
 
-            int texIndex = ( i * ( numSlices + 1 ) + j ) * 2;
-            mTexCoords.put ( texIndex + 0, ( float ) j / ( float ) numSlices );
-            mTexCoords.put ( texIndex + 1, ( 1.0f - ( float ) i )
-                             / ( float ) ( numParallels - 1 ) );
-         }
-      }
+                mVertices
+                        .put(vertex + 0,
+                                (float) (radius
+                                        * Math.sin(angleStep * (float) i) * Math
+                                        .sin(angleStep * (float) j)));
 
-      int index = 0;
+                mVertices.put(vertex + 1,
+                        (float) (radius * Math.cos(angleStep * (float) i)));
+                mVertices
+                        .put(vertex + 2,
+                                (float) (radius
+                                        * Math.sin(angleStep * (float) i) * Math
+                                        .cos(angleStep * (float) j)));
 
-      for ( i = 0; i < numParallels; i++ )
-      {
-         for ( j = 0; j < numSlices; j++ )
-         {
-            mIndices.put ( index++, ( short ) ( i * ( numSlices + 1 ) + j ) );
-            mIndices.put ( index++, ( short ) ( ( i + 1 ) * ( numSlices + 1 ) + j ) );
-            mIndices.put ( index++,
-                           ( short ) ( ( i + 1 ) * ( numSlices + 1 ) + ( j + 1 ) ) );
+                mNormals.put(vertex + 0, mVertices.get(vertex + 0) / radius);
+                mNormals.put(vertex + 1, mVertices.get(vertex + 1) / radius);
+                mNormals.put(vertex + 2, mVertices.get(vertex + 2) / radius);
 
-            mIndices.put ( index++, ( short ) ( i * ( numSlices + 1 ) + j ) );
-            mIndices.put ( index++,
-                           ( short ) ( ( i + 1 ) * ( numSlices + 1 ) + ( j + 1 ) ) );
-            mIndices.put ( index++, ( short ) ( i * ( numSlices + 1 ) + ( j + 1 ) ) );
+                int texIndex = (i * (numSlices + 1) + j) * 2;
+                mTexCoords.put(texIndex + 0, (float) j / (float) numSlices);
+                mTexCoords.put(texIndex + 1, (1.0f - (float) i)
+                        / (float) (numParallels - 1));
+            }
+        }
 
-         }
-      }
+        int index = 0;
 
-      mNumIndices = numIndices;
+        for (i = 0; i < numParallels; i++) {
+            for (j = 0; j < numSlices; j++) {
+                mIndices.put(index++, (short) (i * (numSlices + 1) + j));
+                mIndices.put(index++, (short) ((i + 1) * (numSlices + 1) + j));
+                mIndices.put(index++,
+                        (short) ((i + 1) * (numSlices + 1) + (j + 1)));
 
-      return numIndices;
-   }
+                mIndices.put(index++, (short) (i * (numSlices + 1) + j));
+                mIndices.put(index++,
+                        (short) ((i + 1) * (numSlices + 1) + (j + 1)));
+                mIndices.put(index++, (short) (i * (numSlices + 1) + (j + 1)));
 
-   public int genCube ( float scale )
-   {
-      int i;
-      int numVertices = 24;
-      int numIndices = 36;
+            }
+        }
 
-      float[] cubeVerts = { -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, 0.5f,
-                            -0.5f, 0.5f, 0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f,
-                            0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, -0.5f, -0.5f,
-                            -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f,
-                            -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-                            0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f,
-                            -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f,
-                            0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f,
-                          };
+        mNumIndices = numIndices;
 
-      float[] cubeNormals = { 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-                              -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-                              0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-                              0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-                              0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                              1.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-                              -1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-                              0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                            };
+        return numIndices;
+    }
 
-      float[] cubeTex = { 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-                          1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                          0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-                          1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-                          1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-                        };
+    public int genCube(float scale) {
+        int i;
+        int numVertices = 24;
+        int numIndices = 36;
 
-      // Allocate memory for buffers
-      mVertices = ByteBuffer.allocateDirect ( numVertices * 3 * 4 )
-                  .order ( ByteOrder.nativeOrder() ).asFloatBuffer();
-      mNormals = ByteBuffer.allocateDirect ( numVertices * 3 * 4 )
-                 .order ( ByteOrder.nativeOrder() ).asFloatBuffer();
-      mTexCoords = ByteBuffer.allocateDirect ( numVertices * 2 * 4 )
-                   .order ( ByteOrder.nativeOrder() ).asFloatBuffer();
-      mIndices = ByteBuffer.allocateDirect ( numIndices * 2 )
-                 .order ( ByteOrder.nativeOrder() ).asShortBuffer();
+        float[] cubeVerts = {
+                //前1：012
+                -0.5f, 0.5f, 0.5f,//0
+                -0.5f, -0.5f, 0.5f,//1
+                0.5f, -0.5f, 0.5f,//2
 
-      mVertices.put ( cubeVerts ).position ( 0 );
+                //前2：230
+                0.5f, -0.5f, 0.5f,//2
+                0.5f, 0.5f, 0.5f,//3
+                -0.5f, 0.5f, 0.5f,//0
 
-      for ( i = 0; i < numVertices * 3; i++ )
-      {
-         mVertices.put ( i, mVertices.get ( i ) * scale );
-      }
+                //后1:456
+                -0.5f, 0.5f, -0.5f,//4
+                -0.5f, -0.5f, -0.5f,//5
+                0.5f, -0.5f, -0.5f,//6
 
-      mNormals.put ( cubeNormals ).position ( 0 );
-      mTexCoords.put ( cubeTex ).position ( 0 );
+                //后2：674
+                0.5f, -0.5f, -0.5f,//6
+                0.5f, 0.5f, -0.5f,//7
+                -0.5f, 0.5f, -0.5f,//4
 
-      short[] cubeIndices = { 0, 2, 1, 0, 3, 2, 4, 5, 6, 4, 6, 7, 8, 9, 10,
-                              8, 10, 11, 12, 15, 14, 12, 14, 13, 16, 17, 18, 16, 18, 19, 20,
-                              23, 22, 20, 22, 21
-                            };
+                //做1：451
+                -0.5f, 0.5f, -0.5f,//4
+                -0.5f, -0.5f, -0.5f,//5
+                -0.5f, -0.5f, 0.5f,//1
 
-      mIndices.put ( cubeIndices ).position ( 0 );
-      mNumIndices = numIndices;
-      return numIndices;
-   }
+                //左2:104
+                -0.5f, -0.5f, 0.5f,//1
+                -0.5f, 0.5f, 0.5f,//0
+                -0.5f, 0.5f, -0.5f,//4
 
-   public FloatBuffer getVertices()
-   {
-      return mVertices;
-   }
+                //right 1:326
+                0.5f, 0.5f, 0.5f,//3
+                0.5f, -0.5f, 0.5f,//2
+                0.5f, -0.5f, -0.5f,//6
 
-   public FloatBuffer getNormals()
-   {
-      return mNormals;
-   }
+                //right 2:673
+                0.5f, -0.5f, -0.5f,//6
+                0.5f, 0.5f, -0.5f,//7
+                0.5f, 0.5f, 0.5f//3
 
-   public FloatBuffer getTexCoords()
-   {
-      return mTexCoords;
-   }
+        };
 
-   public ShortBuffer getIndices()
-   {
-      return mIndices;
-   }
+        float[] cubeColor = {
+                //前1：012
+                1.0f, 0.0f, 0.0f, 1.0f,//0
+                1.0f, 0.0f, 0.0f, 1.0f,//0
+                1.0f, 0.0f, 0.0f, 1.0f,//0
 
-   public int getNumIndices()
-   {
-      return mNumIndices;
-   }
+                //前2：230
+                1.0f, 0.0f, 0.0f, 1.0f,//0
+                1.0f, 0.0f, 0.0f, 1.0f,//0
+                1.0f, 0.0f, 0.0f, 1.0f,//0
 
-   // Member variables
-   private FloatBuffer mVertices;
-   private FloatBuffer mNormals;
-   private FloatBuffer mTexCoords;
-   private ShortBuffer mIndices;
-   private int mNumIndices;
+                //后1:456
+                0.0f, 0.0f, 1.0f, 1.0f,//0
+                0.0f, 0.0f, 1.0f, 1.0f,//0
+                0.0f, 0.0f, 1.0f, 1.0f,//0
+
+                //后2：674
+                0.0f, 0.0f, 1.0f, 1.0f,//0
+                0.0f, 0.0f, 1.0f, 1.0f,//0
+                0.0f, 0.0f, 1.0f, 1.0f,//0
+
+                //做1：451
+                0.0f, 1.0f, 0.0f, 1.0f,//0
+                0.0f, 1.0f, 0.0f, 1.0f,//0
+                0.0f, 1.0f, 0.0f, 1.0f,//0
+
+                //左2:104
+                0.0f, 1.0f, 0.0f, 1.0f,//0
+                0.0f, 1.0f, 0.0f, 1.0f,//0
+                0.0f, 1.0f, 0.0f, 1.0f,//0
+
+                //right 1:326
+                0.0f, 1.0f, 1.0f, 1.0f,//0
+                0.0f, 1.0f, 1.0f, 1.0f,//0
+                0.0f, 1.0f, 1.0f, 1.0f,//0
+
+                //right 2:673
+                0.0f, 1.0f, 1.0f, 1.0f,//0
+                0.0f, 1.0f, 1.0f, 1.0f,//0
+                0.0f, 1.0f, 1.0f, 1.0f//0
+
+        };
+
+        float[] cubeNormals = {
+                0.0f, -1.0f, 0.0f, 0.0f,
+                -1.0f, 0.0f, 0.0f, -1.0f,
+                0.0f, 0.0f, -1.0f, 0.0f,
+
+                0.0f, 1.0f, 0.0f, 0.0f,
+                1.0f, 0.0f, 0.0f, 1.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+
+                0.0f, 0.0f, -1.0f, 0.0f,
+                0.0f, -1.0f, 0.0f, 0.0f,
+                -1.0f, 0.0f, 0.0f, -1.0f,
+
+                0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+                1.0f, 0.0f, 0.0f, 1.0f,
+
+                -1.0f, 0.0f, 0.0f, -1.0f,
+                0.0f, 0.0f, -1.0f, 0.0f,
+                0.0f, -1.0f, 0.0f, 0.0f,
+
+                1.0f, 0.0f, 0.0f, 1.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+        };
+
+        float[] cubeTex = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+                1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+                1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+                1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+        };
+
+        // Allocate memory for buffers
+        mVertices = ByteBuffer.allocateDirect(numVertices * 3 * 4)
+                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mNormals = ByteBuffer.allocateDirect(numVertices * 3 * 4)
+                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mTexCoords = ByteBuffer.allocateDirect(numVertices * 2 * 4)
+                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mIndices = ByteBuffer.allocateDirect(numIndices * 2)
+                .order(ByteOrder.nativeOrder()).asShortBuffer();
+
+        // Allocate memory for buffers
+        mColors = ByteBuffer.allocateDirect(numVertices * 4 * 4)
+                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mColors.put(cubeColor).position(0);
+
+
+        mVertices.put(cubeVerts).position(0);
+
+        for (i = 0; i < numVertices * 3; i++) {
+            mVertices.put(i, mVertices.get(i) * scale);
+        }
+
+        mNormals.put(cubeNormals).position(0);
+        mTexCoords.put(cubeTex).position(0);
+
+        short[] cubeIndices = {0, 2, 1, 0, 3, 2, 4, 5, 6, 4, 6, 7, 8, 9, 10,
+                8, 10, 11, 12, 15, 14, 12, 14, 13, 16, 17, 18, 16, 18, 19, 20,
+                23, 22, 20, 22, 21
+        };
+
+        mIndices.put(cubeIndices).position(0);
+        mNumIndices = numIndices;
+        return numIndices;
+    }
+
+    public FloatBuffer getVertices() {
+        return mVertices;
+    }
+
+    public FloatBuffer getNormals() {
+        return mNormals;
+    }
+
+    public FloatBuffer getTexCoords() {
+        return mTexCoords;
+    }
+
+    public ShortBuffer getIndices() {
+        return mIndices;
+    }
+
+    public int getNumIndices() {
+        return mNumIndices;
+    }
+
+
 }

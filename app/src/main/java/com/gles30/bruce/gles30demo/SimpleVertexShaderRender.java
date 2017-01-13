@@ -96,8 +96,11 @@ class SimpleVertexShaderRender implements GLSurfaceView.Renderer {
                 0, mCube.getVertices());
         GLES30.glEnableVertexAttribArray(0);
 
+        GLES30.glVertexAttribPointer(1, 4, GLES30.GL_FLOAT, false, 0, mCube.getmColors());
+        GLES30.glEnableVertexAttribArray(1);
+
         // Set the vertex color to red
-        GLES30.glVertexAttrib4f(1, 1.0f, 0.0f, 0.0f, 1.0f);
+//        GLES30.glVertexAttrib4f(1, 1.0f, 0.0f, 0.0f, 1.0f);
 
         // Load the MVP matrix
         GLES30.glUniformMatrix4fv(mMVPMatrixLocation, 1, false,
