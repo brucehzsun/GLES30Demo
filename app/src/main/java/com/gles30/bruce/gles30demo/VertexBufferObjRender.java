@@ -92,9 +92,9 @@ class VertexBufferObjRender implements GLSurfaceView.Renderer {
                         "}";
         programId = ESShader.loadProgram(vertextShader, fargmentShader);
 
-        mVBOIds[0] = 0;
-        mVBOIds[1] = 0;
-        mVBOIds[2] = 0;
+//        mVBOIds[0] = 0;
+//        mVBOIds[1] = 0;
+//        mVBOIds[2] = 0;
 
         GLES30.glClearColor(0.5f, 0.5f, 0.5f, 0f);
     }
@@ -125,17 +125,17 @@ class VertexBufferObjRender implements GLSurfaceView.Renderer {
             // Only allocate on the first draw
             GLES30.glGenBuffers(3, mVBOIds, 0);
 
-            vertextBuffer.position(0);
+//            vertextBuffer.position(0);
             GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, mVBOIds[0]);
             GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, vtxStrides[0] * numVertices,
                     vertextBuffer, GLES30.GL_STATIC_DRAW);
 
-            colorBuffer.position(0);
+//            colorBuffer.position(0);
             GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, mVBOIds[1]);
             GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, vtxStrides[1] * numVertices,
                     colorBuffer, GLES30.GL_STATIC_DRAW);
 
-            indicesBuffer.position(0);
+//            indicesBuffer.position(0);
             GLES30.glBindBuffer(GLES30.GL_ELEMENT_ARRAY_BUFFER, mVBOIds[2]);
             GLES30.glBufferData(GLES30.GL_ELEMENT_ARRAY_BUFFER, 2 * numIndices,
                     indicesBuffer, GLES30.GL_STATIC_DRAW);
