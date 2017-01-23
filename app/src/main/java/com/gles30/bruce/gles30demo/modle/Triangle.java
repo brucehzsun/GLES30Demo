@@ -4,6 +4,7 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import com.gles30.bruce.gles30demo.util.ShaderUtil;
 
@@ -16,6 +17,8 @@ import java.nio.FloatBuffer;
  */
 
 public class Triangle {
+    private static final String TAG = "Triangle";
+
     private static float[] mMVPMatrix;
     public static float[] mProjectMatrix = new float[16];//4*4
     public static float[] mVMatrix = new float[16];
@@ -26,9 +29,9 @@ public class Triangle {
     private FloatBuffer mVertexBuffer;
     private FloatBuffer mColorBuffer;
     private int progrom;
-    private int uMVPMatrixHandle;
-    private int aPositionHandle;
-    private int aColorHandle;
+    //    private int uMVPMatrixHandle;//0
+    //    private int aPositionHandle;//0
+//    private int aColorHandle;//1
     public float xAngle;
 
     public Triangle(Context context) {
@@ -64,9 +67,10 @@ public class Triangle {
         String fragmentShader = ShaderUtil.loadFromAssetsFile(context, "fragment.sh");
         progrom = ShaderUtil.createProgram(vertexShader, fragmentShader);
 
-        aPositionHandle = GLES30.glGetAttribLocation(progrom, "aPosition");
-        aColorHandle = GLES30.glGetAttribLocation(progrom, "aColor");
-        uMVPMatrixHandle = GLES30.glGetUniformLocation(progrom, "uMVPMatrix");
+//        aPositionHandle = GLES30.glGetAttribLocation(progrom, "aPosition");
+//        aColorHandle = GLES30.glGetAttribLocation(progrom, "aColor");
+//        uMVPMatrixHandle = GLES30.glGetUniformLocation(progrom, "uMVPMatrix");
+//        Log.d(TAG, "uMVPMatrixHandle = " + uMVPMatrixHandle);
     }
 
     public static float[] getFinalMatrix(float[] spec) {
@@ -83,11 +87,11 @@ public class Triangle {
         Matrix.translateM(mMMatrix, 0, 0, 0, 1);
         Matrix.rotateM(mMMatrix, 0, xAngle, 1, 0, 0);
 
-        GLES30.glUniformMatrix4fv(uMVPMatrixHandle, 1, false, getFinalMatrix(mMMatrix), 0);
-        GLES30.glVertexAttribPointer(aPositionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, mVertexBuffer);
-        GLES30.glVertexAttribPointer(aColorHandle, 4, GLES20.GL_FLOAT, false, 4 * 4, mColorBuffer);
-        GLES30.glEnableVertexAttribArray(aPositionHandle);
-        GLES30.glEnableVertexAttribArray(aColorHandle);
+        GLES30.glUniformMatrix4fv(0, 1, false, getFinalMatrix(mMMatrix), 0);
+        GLES30.glVertexAttribPointer(0, 3, GLES20.GL_FLOAT, false, 3 * 4, mVertexBuffer);
+        GLES30.glVertexAttribPointer(1, 4, GLES20.GL_FLOAT, false, 4 * 4, mColorBuffer);
+        GLES30.glEnableVertexAttribArray(0);
+        GLES30.glEnableVertexAttribArray(1);
 
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 3);
     }
