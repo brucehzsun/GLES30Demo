@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
+import com.gles30.bruce.gles30demo.surfaceview.FiveStarGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.TriangleGLSurfaceView;
 
 
@@ -20,7 +21,7 @@ public class DemoActivity extends Activity {
         super.onCreate(savedInstanceState);
         int type = getIntent().getIntExtra(MainActivity.TYPE, 0);
 
-        surfaceView = new TriangleGLSurfaceView(this);
+        surfaceView = new FiveStarGLSurfaceView(this);
         setContentView(surfaceView);
     }
 

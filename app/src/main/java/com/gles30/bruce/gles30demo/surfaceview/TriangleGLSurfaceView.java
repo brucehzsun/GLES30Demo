@@ -24,7 +24,7 @@ public class TriangleGLSurfaceView extends GLSurfaceView {
         super(context);
         this.setEGLContextClientVersion(3);
         render = new SceneRender();
-        setRenderer(new SceneRender());
+        setRenderer(render);
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
 
@@ -51,8 +51,8 @@ public class TriangleGLSurfaceView extends GLSurfaceView {
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             GLES30.glViewport(0, 0, width, height);
             float ratio = (float) width / height;
-            Matrix.frustumM(Triangle.mProjectMatrix, 0, -ratio, ratio, -1, 1, 1, 10);
-            Matrix.setLookAtM(Triangle.mVMatrix, 0, 0, 0, 3, 0, 0, 0, 0, 1.0f, 0);
+            Matrix.frustumM(MatrixState.mProjectMatrix, 0, -ratio, ratio, -1, 1, 1, 10);
+            Matrix.setLookAtM(MatrixState.mVMatrix, 0, 0, 0, 3, 0, 0, 0, 0, 1.0f, 0);
         }
 
         @Override
