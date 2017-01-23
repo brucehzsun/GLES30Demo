@@ -1,10 +1,10 @@
-package com.gles30.bruce.gles30demo;
+package com.gles30.bruce.gles30demo.render;
 
-import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 
-import com.gles30.bruce.gles30demo.Utils.ESShader;
+import com.gles30.bruce.gles30demo.DemoActivity;
+import com.gles30.bruce.gles30demo.util.ShaderUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -90,7 +90,7 @@ class VertexBufferObjRender implements GLSurfaceView.Renderer {
                         "void main(){               \n" +
                         "   fragColor = vColor;     \n" +
                         "}";
-        programId = ESShader.loadProgram(vertextShader, fargmentShader);
+        programId = ShaderUtil.createProgram(vertextShader, fargmentShader);
 
 //        mVBOIds[0] = 0;
 //        mVBOIds[1] = 0;

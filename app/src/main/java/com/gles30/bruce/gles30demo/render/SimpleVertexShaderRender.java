@@ -1,18 +1,13 @@
-package com.gles30.bruce.gles30demo;
+package com.gles30.bruce.gles30demo.render;
 
-import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.os.SystemClock;
 
-import com.gles30.bruce.gles30demo.Utils.ESShader;
-import com.gles30.bruce.gles30demo.Utils.ESShapes;
-import com.gles30.bruce.gles30demo.Utils.ESTransform;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
+import com.gles30.bruce.gles30demo.DemoActivity;
+import com.gles30.bruce.gles30demo.util.ShaderUtil;
+import com.gles30.bruce.gles30demo.util.ESShapes;
+import com.gles30.bruce.gles30demo.util.ESTransform;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -65,7 +60,7 @@ class SimpleVertexShaderRender implements GLSurfaceView.Renderer {
                         "  outColor = v_color;                       \n" +
                         "}                                           \n";
 
-        programId = ESShader.loadProgram(vShaderStr, fShaderStr);
+        programId = ShaderUtil.createProgram(vShaderStr, fShaderStr);
         mMVPMatrixLocation = GLES30.glGetUniformLocation(programId, "u_mvpMatrix");
 
         mCube.genCube(1.0f);

@@ -30,101 +30,24 @@
 //            http://my.safaribooksonline.com/book/animation-and-3d/9780133440133
 //
 
-// ESShader
+// ShaderUtil
 //
 //    Utility functions for loading GLSL ES 3.0 shaders and creating program objects.
 //
 
-package com.gles30.bruce.gles30demo.Utils;
+package com.gles30.bruce.gles30demo.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.opengl.GLES30;
 import android.util.Log;
 
-public class ESShader {
-    //
-    ///
-    /// \brief Read a shader source into a String
-    /// \param context Application context
-    /// \param fileName Name of shader file
-    /// \return A String object containing shader source, otherwise null
-    //
-    private static String readShader(Context context, String fileName) {
-        String shaderSource = null;
+public class ShaderUtil {
 
-        if (fileName == null) {
-            return shaderSource;
-        }
-
-        // Read the shader file from assets
-        InputStream is = null;
-        byte[] buffer;
-
-        try {
-            is = context.getAssets().open(fileName);
-
-            // Create a buffer that has the same size as the InputStream
-            buffer = new byte[is.available()];
-
-            // Read the text file as a stream, into the buffer
-            is.read(buffer);
-
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-            // Write this buffer to the output stream
-            os.write(buffer);
-
-            // Close input and output streams
-            os.close();
-            is.close();
-
-            shaderSource = os.toString();
-        } catch (IOException ioe) {
-            is = null;
-        }
-
-        if (is == null) {
-            return shaderSource;
-        }
-
-        return shaderSource;
-    }
-
-    /**
-     * brief Load a shader, check for compile errors, print error messages to
-     *
-     * @param type      Type of shader (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER)
-     * @param shaderSrc Shader source string
-     * @return A new shader object on success, 0 on failure
-     */
-    public static int loadShader(int type, String shaderSrc) {
-        // Create the shader object
-        int shader = GLES30.glCreateShader(type);
-        if (shader == 0) {
-            return 0;
-        }
-
-        // Load the shader source
-        GLES30.glShaderSource(shader, shaderSrc);
-
-        // Compile the shader
-        GLES30.glCompileShader(shader);
-
-        // Check the compile status
-        int[] compiled = new int[1];
-        GLES30.glGetShaderiv(shader, GLES30.GL_COMPILE_STATUS, compiled, 0);
-        if (compiled[0] == 0) {
-            Log.e("ESShader", GLES30.glGetShaderInfoLog(shader));
-            GLES30.glDeleteShader(shader);
-            return 0;
-        }
-
-        return shader;
-    }
 
     /**
      * brief Load a vertex and fragment shader, create a program object, link program.
@@ -134,7 +57,7 @@ public class ESShader {
      * @param fragShaderSrc Fragment shader source code
      * @return A new program object linked with the vertex/fragment shader pair, 0 on failure
      */
-    public static int loadProgram(String vertShaderSrc, String fragShaderSrc) {
+    public static int createProgram(String vertShaderSrc, String fragShaderSrc) {
 
         // Load the vertex/fragment shaders
         int vertexShader = loadShader(GLES30.GL_VERTEX_SHADER, vertShaderSrc);
@@ -155,7 +78,9 @@ public class ESShader {
         }
 
         GLES30.glAttachShader(programObject, vertexShader);
+        checkGLError("glAttachShader");
         GLES30.glAttachShader(programObject, fragmentShader);
+        checkGLError("glAttachShader");
 
         // Link the program
         GLES30.glLinkProgram(programObject);
@@ -164,8 +89,8 @@ public class ESShader {
         int[] linked = new int[1];
         GLES30.glGetProgramiv(programObject, GLES30.GL_LINK_STATUS, linked, 0);
         if (linked[0] == 0) {
-            Log.e("ESShader", "Error linking program:");
-            Log.e("ESShader", GLES30.glGetProgramInfoLog(programObject));
+            Log.e("ShaderUtil", "Error linking program:");
+            Log.e("ShaderUtil", GLES30.glGetProgramInfoLog(programObject));
             GLES30.glDeleteProgram(programObject);
             return 0;
         }
@@ -196,14 +121,14 @@ public class ESShader {
         String fragShaderSrc = null;
 
         // Read vertex shader from assets
-        vertShaderSrc = readShader(context, vertexShaderFileName);
+        vertShaderSrc = loadFromAssetsFile(context, vertexShaderFileName);
 
         if (vertShaderSrc == null) {
             return 0;
         }
 
         // Read fragment shader from assets
-        fragShaderSrc = readShader(context, fragShaderFileName);
+        fragShaderSrc = loadFromAssetsFile(context, fragShaderFileName);
 
         if (fragShaderSrc == null) {
             return 0;
@@ -241,8 +166,8 @@ public class ESShader {
         GLES30.glGetProgramiv(programObject, GLES30.GL_LINK_STATUS, linked, 0);
 
         if (linked[0] == 0) {
-            Log.e("ESShader", "Error linking program:");
-            Log.e("ESShader", GLES30.glGetProgramInfoLog(programObject));
+            Log.e("ShaderUtil", "Error linking program:");
+            Log.e("ShaderUtil", GLES30.glGetProgramInfoLog(programObject));
             GLES30.glDeleteProgram(programObject);
             return 0;
         }
@@ -252,5 +177,79 @@ public class ESShader {
         GLES30.glDeleteShader(fragmentShader);
 
         return programObject;
+    }
+
+
+    public static void checkGLError(String op) {
+        int error;
+        while ((error = GLES30.glGetError()) != GLES30.GL_NO_ERROR) {
+            Log.e("GL30_ERROR", op + ":glError = " + error);
+            throw new RuntimeException(op + ":glError = " + error);
+        }
+    }
+
+    public static String loadFromAssetsFile(Context context, String fname) {
+        InputStream inStream = null;
+        ByteArrayOutputStream outStream = null;
+        try {
+            inStream = context.getResources().getAssets().open(fname);
+            outStream = new ByteArrayOutputStream();
+            int len;
+            byte[] buffer = new byte[1024 * 8];
+            while ((len = inStream.read(buffer)) != -1) {
+                outStream.write(buffer, 0, len);
+            }
+            return outStream.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inStream != null) {
+                try {
+                    inStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (outStream != null) {
+                try {
+                    outStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * brief Load a shader, check for compile errors, print error messages to
+     *
+     * @param type      Type of shader (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER)
+     * @param shaderSrc Shader source string
+     * @return A new shader object on success, 0 on failure
+     */
+    public static int loadShader(int type, String shaderSrc) {
+        // Create the shader object
+        int shader = GLES30.glCreateShader(type);
+        if (shader == 0) {
+            return 0;
+        }
+
+        // Load the shader source
+        GLES30.glShaderSource(shader, shaderSrc);
+
+        // Compile the shader
+        GLES30.glCompileShader(shader);
+
+        // Check the compile status
+        int[] compiled = new int[1];
+        GLES30.glGetShaderiv(shader, GLES30.GL_COMPILE_STATUS, compiled, 0);
+        if (compiled[0] == 0) {
+            Log.e("ShaderUtil", GLES30.glGetShaderInfoLog(shader));
+            GLES30.glDeleteShader(shader);
+            return 0;
+        }
+
+        return shader;
     }
 }

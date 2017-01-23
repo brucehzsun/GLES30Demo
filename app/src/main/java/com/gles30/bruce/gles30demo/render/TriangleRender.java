@@ -1,9 +1,10 @@
-package com.gles30.bruce.gles30demo;
+package com.gles30.bruce.gles30demo.render;
 
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 
-import com.gles30.bruce.gles30demo.Utils.ESShader;
+import com.gles30.bruce.gles30demo.DemoActivity;
+import com.gles30.bruce.gles30demo.util.ShaderUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -51,7 +52,7 @@ class TriangleRender implements GLSurfaceView.Renderer {
                 "void main(){\n" +
                 "   fragColor = vec4(1.0,0.0,0.0,1.0);\n" +
                 "}\n";
-        programId = ESShader.loadProgram(vertextShader, fargmentShader);
+        programId = ShaderUtil.createProgram(vertextShader, fargmentShader);
         GLES30.glClearColor(0.5f, 0.5f, 0.5f, 0f);
     }
 

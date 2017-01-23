@@ -35,7 +35,7 @@
 //    Utility class for handling transformations
 //
 
-package com.gles30.bruce.gles30demo.Utils;
+package com.gles30.bruce.gles30demo.util;
 
 import java.lang.Math;
 import java.nio.ByteBuffer;
