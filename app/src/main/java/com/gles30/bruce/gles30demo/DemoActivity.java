@@ -19,10 +19,20 @@ public class DemoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int type = getIntent().getIntExtra(MainActivity.TYPE, 0);
-
-        surfaceView = new FiveStarGLSurfaceView(this);
+        initData();
         setContentView(surfaceView);
+    }
+
+    private void initData() {
+        int type = getIntent().getIntExtra(MainActivity.TYPE, 0);
+        switch (type) {
+            case 0:
+                surfaceView = new TriangleGLSurfaceView(this);
+                break;
+            case 1:
+                surfaceView = new FiveStarGLSurfaceView(this);
+                break;
+        }
     }
 
     @Override

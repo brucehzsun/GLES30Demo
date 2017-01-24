@@ -75,11 +75,24 @@ public class FiveStar {
         mVertexBuffer.put(vertexArray).position(0);
 
         float[] colorData = new float[vCount * 4];
-        for (int i = 0; i < vCount; i++) {
-            colorData[i] = i / vCount;
-            colorData[i + 1] = i / vCount;
-            colorData[i + 2] = i / vCount;
-            colorData[i + 3] = 1;
+
+        int triangleCount = vCount / 3;
+        for (int i = 0; i < triangleCount; i++) {
+            if (i % 2 == 0) {
+                for (int j = 0; j < 3; j++) {
+                    colorData[(i * 3 + j) * 4] = 0;
+                    colorData[(i * 3 + j) * 4 + 1] = 0;
+                    colorData[(i * 3 + j) * 4 + 2] = 1;
+                    colorData[(i * 3 + j) * 4 + 3] = 1;
+                }
+            } else {
+                for (int j = 0; j < 3; j++) {
+                    colorData[(i * 3 + j) * 4] = 1;
+                    colorData[(i * 3 + j) * 4 + 1] = 0;
+                    colorData[(i * 3 + j) * 4 + 2] = 0;
+                    colorData[(i * 3 + j) * 4 + 3] = 1;
+                }
+            }
         }
 
         mColorBuffer = ByteBuffer.allocateDirect(colorData.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();

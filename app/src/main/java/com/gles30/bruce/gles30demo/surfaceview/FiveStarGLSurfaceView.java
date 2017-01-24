@@ -67,7 +67,7 @@ public class FiveStarGLSurfaceView extends GLSurfaceView {
         @Override
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             GLES30.glViewport(0, 0, width, height);
-            float ratio = width / height;
+            float ratio = (float) width / height;
             MatrixState.setPorjectOrtho(-ratio, ratio, -1, 1, 1, 10);
             MatrixState.setCamera(0, 0, 3f, 0, 0, 0f, 9f, 1.0f, 0f);
         }

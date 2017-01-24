@@ -12,24 +12,24 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="简单三角形" />
+        android:text="三角形" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="简单三角形2" />
+        android:text="五角形" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="顶点缓冲区对象" />
+        android:text="备用1" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="旋转立方体" />
+        android:text="备用2" />
 
 </LinearLayout>
