@@ -51,8 +51,9 @@ public class TriangleGLSurfaceView extends GLSurfaceView {
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             GLES30.glViewport(0, 0, width, height);
             float ratio = (float) width / height;
-            Matrix.frustumM(MatrixState.mProjectMatrix, 0, -ratio, ratio, -1, 1, 1, 10);
-            Matrix.setLookAtM(MatrixState.mVMatrix, 0, 0, 0, 3, 0, 0, 0, 0, 1.0f, 0);
+            MatrixState.setPorjectFrustum(-ratio, ratio, -1, 1, 1, 10);
+            MatrixState.setCamera(0, 0, 3, 0, 0, 0, 0, 1.0f, 0);
+            MatrixState.setInitStack();
         }
 
         @Override

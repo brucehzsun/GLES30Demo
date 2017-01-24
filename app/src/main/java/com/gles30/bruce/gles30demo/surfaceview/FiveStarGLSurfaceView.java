@@ -60,7 +60,7 @@ public class FiveStarGLSurfaceView extends GLSurfaceView {
             GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1);
             GLES30.glEnable(GLES30.GL_DEPTH_TEST);
             for (int i = 0; i < fiveStars.length; i++) {
-                fiveStars[i] = new FiveStar(getContext(), 0.2f, 0.5f, -0.3f * i);
+                fiveStars[i] = new FiveStar(getContext(), 0.4f, 1.0f, -1.0f * i);
             }
         }
 
@@ -68,8 +68,9 @@ public class FiveStarGLSurfaceView extends GLSurfaceView {
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             GLES30.glViewport(0, 0, width, height);
             float ratio = (float) width / height;
-            MatrixState.setPorjectOrtho(-ratio, ratio, -1, 1, 1, 10);
+            MatrixState.setPorjectFrustum(-ratio, ratio, -1, 1, 1, 10);
             MatrixState.setCamera(0, 0, 3f, 0, 0, 0f, 9f, 1.0f, 0f);
+            MatrixState.setInitStack();
         }
 
         @Override

@@ -112,12 +112,12 @@ public class FiveStar {
 
     public void drawSelf() {
         GLES30.glUseProgram(progrom);
-        Matrix.setRotateM(MatrixState.mMMatrix, 0, 0, 0, 1, 0);
-        Matrix.translateM(MatrixState.mMMatrix, 0, 0, 0, 1);
-        Matrix.rotateM(MatrixState.mMMatrix, 0, yAngle, 0, 1, 0);
-        Matrix.rotateM(MatrixState.mMMatrix, 0, xAngle, 1, 0, 0);
+        MatrixState.setInitStack();
+        MatrixState.translate(0, 0, 1);
+        MatrixState.rotate(yAngle, 0, 1, 0);
+        MatrixState.rotate(xAngle, 1, 0, 0);
 
-        GLES30.glUniformMatrix4fv(0, 1, false, MatrixState.getFinalMatrix(MatrixState.mMMatrix), 0);
+        GLES30.glUniformMatrix4fv(0, 1, false, MatrixState.getFinalMatrix(), 0);
         GLES30.glVertexAttribPointer(0, 3, GLES30.GL_FLOAT, false, 3 * 4, mVertexBuffer);
         GLES30.glVertexAttribPointer(1, 4, GLES30.GL_FLOAT, false, 4 * 4, mColorBuffer);
 
