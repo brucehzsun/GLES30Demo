@@ -125,4 +125,9 @@ public class MatrixState {
     public static void setPorjectFrustum(float left, float right, int bottom, int top, int near, int far) {
         Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, near, far);
     }
+
+    //沿X、Y、Z轴方向进行缩放变换的方法
+    public static void scale(float x, float y, float z) {
+        Matrix.scaleM(currMatrix, 0, x, y, z);
+    }
 }
