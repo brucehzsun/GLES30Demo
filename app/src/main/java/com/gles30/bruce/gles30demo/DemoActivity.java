@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
+import com.gles30.bruce.gles30demo.surfaceview.CircleGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.CubeGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.FiveStarGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.LineSurfaceView;
@@ -39,6 +40,9 @@ public class DemoActivity extends Activity {
                 break;
             case 3:
                 surfaceView = new LineSurfaceView(this);
+                break;
+            case 4:
+                surfaceView = new CircleGLSurfaceView(this);
                 break;
         }
     }
