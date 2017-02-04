@@ -4,9 +4,9 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
-import android.opengl.Matrix;
 
 import com.gles30.bruce.gles30demo.modle.Triangle;
+import com.gles30.bruce.gles30demo.util.MatrixState;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

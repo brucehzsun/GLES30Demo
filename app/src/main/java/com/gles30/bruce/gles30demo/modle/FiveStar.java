@@ -1,11 +1,9 @@
 package com.gles30.bruce.gles30demo.modle;
 
 import android.content.Context;
-import android.opengl.GLES20;
 import android.opengl.GLES30;
-import android.opengl.Matrix;
 
-import com.gles30.bruce.gles30demo.surfaceview.MatrixState;
+import com.gles30.bruce.gles30demo.util.MatrixState;
 import com.gles30.bruce.gles30demo.util.ShaderUtil;
 
 import java.nio.ByteBuffer;

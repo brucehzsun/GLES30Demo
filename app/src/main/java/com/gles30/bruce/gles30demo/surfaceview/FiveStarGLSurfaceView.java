@@ -3,10 +3,10 @@ package com.gles30.bruce.gles30demo.surfaceview;
 import android.content.Context;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
-import android.opengl.Matrix;
 import android.view.MotionEvent;
 
 import com.gles30.bruce.gles30demo.modle.FiveStar;
+import com.gles30.bruce.gles30demo.util.MatrixState;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
