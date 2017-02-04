@@ -61,7 +61,7 @@ public class CircleGLSurfaceView extends GLSurfaceView {
             //清除深度缓冲与颜色缓冲
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
             //保护现场
-            MatrixState.pushMatrix();
+//            MatrixState.pushMatrix();
             //绘制条状物
             MatrixState.pushMatrix();//保护现场
             MatrixState.translate(-1.3f, 0, 0);//沿x轴负方向平移
@@ -73,7 +73,7 @@ public class CircleGLSurfaceView extends GLSurfaceView {
             circle.drawSelf();
             MatrixState.popMatrix();//恢复现场
             //恢复现场
-            MatrixState.popMatrix();
+//            MatrixState.popMatrix();
         }
     }
 }
