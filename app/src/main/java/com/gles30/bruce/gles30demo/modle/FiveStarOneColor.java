@@ -20,8 +20,8 @@ public class FiveStarOneColor {
     private int maColorLocation; //顶点颜色属性引用
     private FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
     private int vCount = 0;
-    public float yAngle = 0;//绕y轴旋转的角度
-    public float xAngle = 0;//绕z轴旋转的角度
+//    public float yAngle = 0;//绕y轴旋转的角度
+//    public float xAngle = 0;//绕z轴旋转的角度
     final float UNIT_SIZE = 1;
     //    final float UNIT_COLOR = 1;
     private float color[];
@@ -103,15 +103,6 @@ public class FiveStarOneColor {
         // 指定使用某套着色器程序
         GLES30.glUseProgram(mProgram);
         //初始化变换矩阵
-
-        MatrixState.setRotate();
-        //设置沿Z轴正向位移1
-        MatrixState.translate(0, 0, 1);
-        //设置绕y轴旋转
-        MatrixState.rotate(yAngle, 0, 1, 0);
-        //设置绕z轴旋转
-        MatrixState.rotate(xAngle, 1, 0, 0);
-        //将最终变换矩阵传入渲染管线
         GLES30.glUniformMatrix4fv(muMVPMatrixLocation, 1, false, MatrixState.getFinalMatrix(), 0);
         //将顶点位置数据送入渲染管线
         GLES30.glVertexAttribPointer
