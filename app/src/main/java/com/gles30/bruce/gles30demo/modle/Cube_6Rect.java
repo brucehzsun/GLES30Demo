@@ -2,6 +2,7 @@ package com.gles30.bruce.gles30demo.modle;
 
 import android.content.Context;
 
+import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.MatrixState;
 
 import static com.gles30.bruce.gles30demo.util.Constant.UNIT_SIZE;
@@ -11,9 +12,9 @@ public class Cube_6Rect {
     //用于绘制各个面的颜色矩形
     ColorRect cr;
 
-    public Cube_6Rect(Context context) {
+    public Cube_6Rect(Context context, float unitSize, float[] color) {
         //创建用于绘制各个面的颜色矩形对象
-        cr = new ColorRect(context);
+        cr = new ColorRect(context, unitSize, color);
     }
 
     public void drawSelf() {

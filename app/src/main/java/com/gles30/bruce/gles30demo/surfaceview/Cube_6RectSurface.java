@@ -90,7 +90,10 @@ public class Cube_6RectSurface extends GLSurfaceView {
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             //创建立方体对象
-            cube = new Cube_6Rect(getContext());
+            float[] color = new float[]{
+                    0, 1, 1, 1,
+            };
+            cube = new Cube_6Rect(getContext(), Constant.UNIT_SIZE, color);
             //打开深度检测
             GLES30.glEnable(GLES30.GL_DEPTH_TEST);
             //打开背面剪裁
