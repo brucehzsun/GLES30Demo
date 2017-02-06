@@ -32,7 +32,6 @@ public class Cube2Surface extends GLSurfaceView {
     }
 
     //触摸事件回调方法
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent e) {
         float x = e.getX();

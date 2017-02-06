@@ -2,19 +2,19 @@ package com.gles30.bruce.gles30demo.modle;
 
 import android.content.Context;
 
-import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.MatrixState;
 
-import static com.gles30.bruce.gles30demo.util.Constant.UNIT_SIZE;
 
 //立方体
 public class Cube_6Rect {
+    private final float unitSize;
     //用于绘制各个面的颜色矩形
-    ColorRect cr;
+    private ColorRect colorRect;
 
     public Cube_6Rect(Context context, float unitSize, float[] color) {
+        this.unitSize = unitSize;
         //创建用于绘制各个面的颜色矩形对象
-        cr = new ColorRect(context, unitSize, color);
+        colorRect = new ColorRect(context, unitSize, color);
     }
 
     public void drawSelf() {
@@ -26,45 +26,45 @@ public class Cube_6Rect {
 
         //绘制前小面
         MatrixState.pushMatrix();
-        MatrixState.translate(0, 0, UNIT_SIZE);//移到相应位置
-        cr.drawSelf();//绘制矩形面
+        MatrixState.translate(0, 0, unitSize);//移到相应位置
+        colorRect.drawSelf();//绘制矩形面
         MatrixState.popMatrix();
 
         //绘制后小面
         MatrixState.pushMatrix();
-        MatrixState.translate(0, 0, -UNIT_SIZE);
+        MatrixState.translate(0, 0, -unitSize);
         MatrixState.rotate(180, 0, 1, 0);
-        cr.drawSelf();
+        colorRect.drawSelf();
         MatrixState.popMatrix();
 
         //绘制上大面
         MatrixState.pushMatrix();
-        MatrixState.translate(0, UNIT_SIZE, 0);
+        MatrixState.translate(0, unitSize, 0);
         MatrixState.rotate(-90, 1, 0, 0);
-        cr.drawSelf();
+        colorRect.drawSelf();
         MatrixState.popMatrix();
 
         //绘制下大面
         MatrixState.pushMatrix();
-        MatrixState.translate(0, -UNIT_SIZE, 0);
+        MatrixState.translate(0, -unitSize, 0);
         MatrixState.rotate(90, 1, 0, 0);
-        cr.drawSelf();
+        colorRect.drawSelf();
         MatrixState.popMatrix();
 
         //绘制左大面
         MatrixState.pushMatrix();
-        MatrixState.translate(UNIT_SIZE, 0, 0);
+        MatrixState.translate(unitSize, 0, 0);
         MatrixState.rotate(-90, 1, 0, 0);
         MatrixState.rotate(90, 0, 1, 0);
-        cr.drawSelf();
+        colorRect.drawSelf();
         MatrixState.popMatrix();
 
         //绘制右大面
         MatrixState.pushMatrix();
-        MatrixState.translate(-UNIT_SIZE, 0, 0);
+        MatrixState.translate(-unitSize, 0, 0);
         MatrixState.rotate(90, 1, 0, 0);
         MatrixState.rotate(-90, 0, 1, 0);
-        cr.drawSelf();
+        colorRect.drawSelf();
         MatrixState.popMatrix();
 
         //恢复现场
