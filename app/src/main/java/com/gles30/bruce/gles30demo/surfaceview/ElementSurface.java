@@ -1,20 +1,20 @@
 package com.gles30.bruce.gles30demo.surfaceview;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
 import android.content.Context;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 
-import com.gles30.bruce.gles30demo.modle.Belt;
-import com.gles30.bruce.gles30demo.modle.Circle;
+import com.gles30.bruce.gles30demo.modle.BeltElement;
+import com.gles30.bruce.gles30demo.modle.CircleElement;
 import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.MatrixState;
 
-public class CircleGLSurfaceView extends GLSurfaceView {
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
-    public CircleGLSurfaceView(Context context) {
+public class ElementSurface extends GLSurfaceView {
+
+    public ElementSurface(Context context) {
         super(context);
         this.setEGLContextClientVersion(3); //设置使用OPENGL ES3.0
         SceneRenderer mRenderer = new SceneRenderer();
@@ -23,17 +23,17 @@ public class CircleGLSurfaceView extends GLSurfaceView {
     }
 
     private class SceneRenderer implements GLSurfaceView.Renderer {
-        Belt belt;//条状物
-        Circle circle;//圆
+        BeltElement belt;//条状物
+        CircleElement circle;//圆
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             //创建圆对象
-            circle = new Circle(getContext());
+            circle = new CircleElement(getContext());
             //创建条状物对象
-            belt = new Belt(getContext());
+            belt = new BeltElement(getContext());
             //打开深度检测
             GLES30.glEnable(GLES30.GL_DEPTH_TEST);
             //打开背面剪裁
@@ -49,9 +49,7 @@ public class CircleGLSurfaceView extends GLSurfaceView {
             // 调用此方法计算产生透视投影矩阵
             MatrixState.setProjectFrustum(-Constant.ratio, Constant.ratio, -1, 1, 20, 100);
             // 调用此方法产生摄像机矩阵
-            MatrixState.setCamera(0, 8f, 30,
-                    0f, 0f, 0f,
-                    0f, 1.0f, 0.0f);
+            MatrixState.setCamera(0, 8f, 30, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
             //初始化变换矩阵
             MatrixState.setInitStack();
@@ -62,19 +60,21 @@ public class CircleGLSurfaceView extends GLSurfaceView {
             //清除深度缓冲与颜色缓冲
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
             //保护现场
-//            MatrixState.pushMatrix();
+            MatrixState.pushMatrix();
             //绘制条状物
-            MatrixState.pushMatrix();//保护现场
+            MatrixState.pushMatrix();
             MatrixState.translate(-1.3f, 0, 0);//沿x轴负方向平移
             belt.drawSelf();
-            MatrixState.popMatrix();//恢复现场
+            MatrixState.popMatrix();
             //绘制圆
-            MatrixState.pushMatrix();//保护现场
+            MatrixState.pushMatrix();
             MatrixState.translate(1.3f, 0, 0);//沿x轴正方向平移
             circle.drawSelf();
-            MatrixState.popMatrix();//恢复现场
+            MatrixState.popMatrix();
             //恢复现场
-//            MatrixState.popMatrix();
+            MatrixState.popMatrix();
         }
+
+
     }
 }
