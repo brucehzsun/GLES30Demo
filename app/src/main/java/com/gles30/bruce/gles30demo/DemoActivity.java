@@ -10,6 +10,7 @@ import com.gles30.bruce.gles30demo.surfaceview.CircleRangeSurface;
 import com.gles30.bruce.gles30demo.surfaceview.CubeGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.ElementSurface;
 import com.gles30.bruce.gles30demo.surfaceview.FiveStarGLSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.FiveStarOneColorSurface;
 import com.gles30.bruce.gles30demo.surfaceview.LineSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.TriangleGLSurfaceView;
 
@@ -55,6 +56,9 @@ public class DemoActivity extends Activity {
                 break;
             case 7:
                 surfaceView = new CircleRangeSurface(this);
+                break;
+            case 8:
+                surfaceView = new FiveStarOneColorSurface(this);
                 break;
         }
     }

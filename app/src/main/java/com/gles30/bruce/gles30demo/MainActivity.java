@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
         data.add("Belt");
         data.add("Element");
         data.add("RangeElement");
+        data.add("FiveStarOneColor");
         ListAdapter adapter = new ListAdapter(this, data);
         recyclerView.setAdapter(adapter);
 
