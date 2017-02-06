@@ -80,7 +80,9 @@ public class Cube_6RectSurface extends GLSurfaceView {
             //调用此方法计算产生透视投影矩阵
             MatrixState.setProjectFrustum(-Constant.ratio * 0.7f, Constant.ratio * 0.7f, -0.7f, 0.7f, 1, 10);
             //调用此方法产生摄像机矩阵
-            MatrixState.setCamera(0, 0.5f, 4, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+            MatrixState.setCamera(0, 0.5f, 10,
+                    0f, 0f, 0f,
+                    0f, 1.0f, 0.0f);
 
             //初始化变换矩阵
             MatrixState.setInitStack();

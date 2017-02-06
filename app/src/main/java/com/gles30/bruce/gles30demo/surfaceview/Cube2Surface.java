@@ -20,6 +20,9 @@ public class Cube2Surface extends GLSurfaceView {
     private float mPreviousY;//上次的触控位置X坐标
     float xAngle = 20;//总场景绕y轴旋转的角度
 
+    float polygonOffsetFactor = -1.0f;
+    float polygonOffsetUnits = -2.0f;
+
     public Cube2Surface(Context context) {
         super(context);
         this.setEGLContextClientVersion(3); //设置使用OPENGL ES3.0
@@ -50,29 +53,17 @@ public class Cube2Surface extends GLSurfaceView {
         Cube_6Rect cube1;//立方体对象1引用
         Cube_6Rect cube2;//立方体对象2引用
 
-        @SuppressLint({"InlinedApi", "NewApi"})
-        public void onDrawFrame(GL10 gl) {
-            //清除深度缓冲与颜色缓冲
-            GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
-            //保护现场
-            MatrixState.pushMatrix();
-            //绕Y轴旋转
-            MatrixState.rotate(yAngle, 0, 1, 0);//绕y轴旋转yAngle度
-            MatrixState.rotate(xAngle, 1, 0, 0);//绕X轴旋转xAngle度
-            //绘制左侧立方体
-            MatrixState.pushMatrix();
-            MatrixState.translate(-250f, 0, 0);
-            cube1.drawSelf();
-            MatrixState.popMatrix();
-
-            //绘制右侧立方体
-            MatrixState.pushMatrix();
-            MatrixState.translate(250f, 0, 0);
-            cube2.drawSelf();
-            MatrixState.popMatrix();
-
-            //恢复现场
-            MatrixState.popMatrix();
+        @Override
+        public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+            //设置屏幕背景色RGBA
+            GLES30.glClearColor(0f, 0f, 0f, 1.0f);
+            //创建立方体对象
+            cube1 = new Cube_6Rect(getContext(), 500, new float[]{0, 1, 1, 0});
+            cube2 = new Cube_6Rect(getContext(), 499.5f, new float[]{1, 1, 0, 0});
+            //打开深度检测
+            GLES30.glEnable(GLES30.GL_DEPTH_TEST);
+            //打开背面剪裁
+            GLES30.glEnable(GLES30.GL_CULL_FACE);
         }
 
         @SuppressLint("NewApi")
@@ -99,17 +90,35 @@ public class Cube2Surface extends GLSurfaceView {
             MatrixState.setInitStack();
         }
 
-        @SuppressLint("NewApi")
-        public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-            //设置屏幕背景色RGBA
-            GLES30.glClearColor(0f, 0f, 0f, 1.0f);
-            //创建立方体对象
-            cube1 = new Cube_6Rect(getContext(), 500, new float[]{0, 1, 1, 0});
-            cube2 = new Cube_6Rect(getContext(), 499.5f, new float[]{1, 1, 0, 0});
-            //打开深度检测
-            GLES30.glEnable(GLES30.GL_DEPTH_TEST);
-            //打开背面剪裁
-            GLES30.glEnable(GLES30.GL_CULL_FACE);
+        @Override
+        public void onDrawFrame(GL10 gl) {
+            //清除深度缓冲与颜色缓冲
+            GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
+            //保护现场
+            MatrixState.pushMatrix();
+            //绕Y轴旋转
+            MatrixState.rotate(yAngle, 0, 1, 0);//绕y轴旋转yAngle度
+            MatrixState.rotate(xAngle, 1, 0, 0);//绕X轴旋转xAngle度
+            //绘制左侧立方体
+            MatrixState.pushMatrix();
+            MatrixState.translate(-250f, 0, 0);
+            cube1.drawSelf();
+            MatrixState.popMatrix();
+
+
+            GLES30.glEnable(GLES30.GL_POLYGON_OFFSET_FILL);//启用多边形偏移
+            GLES30.glPolygonOffset(polygonOffsetFactor, polygonOffsetUnits);
+
+            //绘制右侧立方体
+            MatrixState.pushMatrix();
+            MatrixState.translate(250f, 0, 0);
+            cube2.drawSelf();
+            MatrixState.popMatrix();
+
+            GLES30.glDisable(GLES30.GL_POLYGON_OFFSET_FILL);//禁用多边形偏移
+
+            //恢复现场
+            MatrixState.popMatrix();
         }
     }
 }
