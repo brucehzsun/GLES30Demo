@@ -16,6 +16,7 @@ import com.gles30.bruce.gles30demo.surfaceview.FiveStarOneColorSurface;
 import com.gles30.bruce.gles30demo.surfaceview.LineSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.PolygonSurface;
 import com.gles30.bruce.gles30demo.surfaceview.TriangleGLSurfaceView;
+import com.gles30.bruce.gles30demo.ui.DemoType;
 
 
 /**
@@ -34,44 +35,31 @@ public class DemoActivity extends Activity {
     }
 
     private void initData() {
-        int type = getIntent().getIntExtra(MainActivity.TYPE, 0);
-        switch (type) {
-            case 0:
-                surfaceView = new TriangleGLSurfaceView(this);
-                break;
-            case 1:
-                surfaceView = new FiveStarGLSurfaceView(this);
-                break;
-            case 2:
-                surfaceView = new CubeGLSurfaceView(this);
-                break;
-            case 3:
-                surfaceView = new LineSurfaceView(this);
-                break;
-            case 4:
-                surfaceView = new CircleGLSurfaceView(this);
-                break;
-            case 5:
-                surfaceView = new BeltGLSurfaceView(this);
-                break;
-            case 6:
-                surfaceView = new ElementSurface(this);
-                break;
-            case 7:
-                surfaceView = new CircleRangeSurface(this);
-                break;
-            case 8:
-                surfaceView = new FiveStarOneColorSurface(this);
-                break;
-            case 9:
-                surfaceView = new Cube_6RectSurface(this);
-                break;
-            case 10:
-                surfaceView = new Cube2Surface(this);
-                break;
-            case 11:
-                surfaceView = new PolygonSurface(this);
-                break;
+        String type = getIntent().getStringExtra(MainActivity.TYPE);
+        if (type.equals(DemoType.Triangle)) {
+            surfaceView = new TriangleGLSurfaceView(this);
+        } else if (type.equals(DemoType.FiveStar)) {
+            surfaceView = new FiveStarGLSurfaceView(this);
+        } else if (type.equals(DemoType.Cube)) {
+            surfaceView = new CubeGLSurfaceView(this);
+        } else if (type.equals(DemoType.Line)) {
+            surfaceView = new LineSurfaceView(this);
+        } else if (type.equals(DemoType.Circle)) {
+            surfaceView = new CircleGLSurfaceView(this);
+        } else if (type.equals(DemoType.Belt)) {
+            surfaceView = new BeltGLSurfaceView(this);
+        } else if (type.equals(DemoType.Element)) {
+            surfaceView = new ElementSurface(this);
+        } else if (type.equals(DemoType.RangeElement)) {
+            surfaceView = new CircleRangeSurface(this);
+        } else if (type.equals(DemoType.FiveStarOneColor)) {
+            surfaceView = new FiveStarOneColorSurface(this);
+        } else if (type.equals(DemoType.Cube_6Rect)) {
+            surfaceView = new Cube_6RectSurface(this);
+        } else if (type.equals(DemoType.Cube2in1)) {
+            surfaceView = new Cube2Surface(this);
+        } else if (type.equals(DemoType.Polygon)) {
+            surfaceView = new PolygonSurface(this);
         }
     }
 

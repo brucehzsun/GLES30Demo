@@ -224,7 +224,7 @@ public class ShaderUtil {
     /**
      * brief Load a shader, check for compile errors, print error messages to
      *
-     * @param type      Type of shader (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER)
+     * @param type      DemoType of shader (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER)
      * @param shaderSrc Shader source string
      * @return A new shader object on success, 0 on failure
      */

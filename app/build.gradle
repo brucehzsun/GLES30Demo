@@ -20,6 +20,9 @@ android {
             minifyEnabled false
         }
     }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {

@@ -35,7 +35,7 @@ public class ListHolder extends RecyclerView.ViewHolder implements View.OnClickL
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(context, DemoActivity.class);
-        intent.putExtra(MainActivity.TYPE, position);
+        intent.putExtra(MainActivity.TYPE, contentView.getText().toString());
         context.startActivity(intent);
     }
 }
