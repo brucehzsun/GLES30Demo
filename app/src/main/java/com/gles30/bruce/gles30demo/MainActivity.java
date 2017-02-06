@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
         data.add("Circle");
         data.add("Belt");
         data.add("Element");
+        data.add("RangeElement");
         ListAdapter adapter = new ListAdapter(this, data);
         recyclerView.setAdapter(adapter);
 
