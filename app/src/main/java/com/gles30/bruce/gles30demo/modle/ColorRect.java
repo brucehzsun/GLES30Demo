@@ -11,7 +11,7 @@ import com.gles30.bruce.gles30demo.util.MatrixState;
 import com.gles30.bruce.gles30demo.util.ShaderUtil;
 
 //颜色矩形
-class ColorRect {
+public class ColorRect {
     int mProgram;//自定义渲染管线着色器程序id
     private int muMVPMatrixLocation;//总变换矩阵引用
     private int muMMatrixLocation;//位置、旋转变换矩阵引用
@@ -22,7 +22,7 @@ class ColorRect {
     FloatBuffer mColorBuffer;//顶点着色数据缓冲
     int vCount = 0;
 
-    ColorRect(Context context, float unitSize, float[] color) {
+    public ColorRect(Context context, float unitSize, float[] color) {
         //初始化顶点坐标与着色数据
         initVertexData(unitSize, color);
         //初始化shader

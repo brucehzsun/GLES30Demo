@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
         data.add("FiveStarOneColor");
         data.add("Cube_6Rect");
         data.add("2 Cube");
+        data.add("Polygon");
         ListAdapter adapter = new ListAdapter(this, data);
         recyclerView.setAdapter(adapter);
 

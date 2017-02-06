@@ -14,6 +14,7 @@ import com.gles30.bruce.gles30demo.surfaceview.ElementSurface;
 import com.gles30.bruce.gles30demo.surfaceview.FiveStarGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.FiveStarOneColorSurface;
 import com.gles30.bruce.gles30demo.surfaceview.LineSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.PolygonSurface;
 import com.gles30.bruce.gles30demo.surfaceview.TriangleGLSurfaceView;
 
 
@@ -67,6 +68,9 @@ public class DemoActivity extends Activity {
                 break;
             case 10:
                 surfaceView = new Cube2Surface(this);
+                break;
+            case 11:
+                surfaceView = new PolygonSurface(this);
                 break;
         }
     }
