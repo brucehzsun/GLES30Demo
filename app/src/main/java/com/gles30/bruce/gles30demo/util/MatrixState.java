@@ -1,8 +1,8 @@
 package com.gles30.bruce.gles30demo.util;
 
-import java.nio.ByteBuffer;
-
 import android.opengl.Matrix;
+
+import java.nio.ByteBuffer;
 
 //管理系统矩阵状态的类
 public class MatrixState {
@@ -136,5 +136,9 @@ public class MatrixState {
     //沿X、Y、Z轴方向进行缩放变换的方法
     public static void scale(float x, float y, float z) {
         Matrix.scaleM(currMatrix, 0, x, y, z);
+    }
+
+    public static void setRotate() {
+        Matrix.setRotateM(MatrixState.getMMatrix(), 0, 0, 0, 1, 0);
     }
 }

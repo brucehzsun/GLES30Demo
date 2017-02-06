@@ -12,7 +12,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class FiveStarOneColorSurface extends GLSurfaceView {
-    private final float TOUCH_SCALE_FACTOR = 180.0f / 320;//角度缩放比例
+    private final static float TOUCH_SCALE_FACTOR = 180.0f / 320;//角度缩放比例
     private SceneRenderer mRenderer;//场景渲染器
 
     private float mPreviousY;//上次的触控位置Y坐标
@@ -60,8 +60,7 @@ public class FiveStarOneColorSurface extends GLSurfaceView {
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
 
             //绘制六角星数组中的各个六角星
-            for (int i = 0; i < ha.length; i++) {
-                FiveStarOneColor h = ha[i];
+            for (FiveStarOneColor h : ha) {
                 h.drawSelf();
             }
         }
@@ -76,6 +75,7 @@ public class FiveStarOneColorSurface extends GLSurfaceView {
 
             //调用此方法产生摄像机矩阵
             MatrixState.setCamera(0, 0, 6, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+            MatrixState.setInitStack();
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
