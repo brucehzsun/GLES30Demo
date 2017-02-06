@@ -15,17 +15,21 @@ import com.gles30.bruce.gles30demo.util.ShaderUtil;
 
 //六角星
 public class FiveStarOneColor {
-    private int mProgram;//自定义渲染管线着色器程序id
-    private int muMVPMatrixHandle;//总变换矩阵引用
-    private int maPositionHandle; //顶点位置属性引用
-    private int maColorHandle; //顶点颜色属性引用
-    private FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
-    private int vCount = 0;
+    int mProgram;//自定义渲染管线着色器程序id
+    int muMVPMatrixHandle;//总变换矩阵引用
+    int maPositionHandle; //顶点位置属性引用
+    int maColorHandle; //顶点颜色属性引用
+    String mVertexShader;    //顶点着色器代码脚本
+    String mFragmentShader;    //片元着色器代码脚本
+    static float[] mMMatrix = new float[16];    //具体物体的3D变换矩阵，包括旋转、平移、缩放
+
+    FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
+    int vCount = 0;
     public float yAngle = 0;//绕y轴旋转的角度
     public float xAngle = 0;//绕z轴旋转的角度
-    private final float UNIT_SIZE = 1;
+    final float UNIT_SIZE = 1;
     final float UNIT_COLOR = 1;
-    private float color[] = new float[3];//五角星的颜色
+    float color[] = new float[3];//五角星的颜色
 
     public FiveStarOneColor(Context context, float r, float R, float z, float[] color) {
         this.color = color;//五角星的颜色
@@ -86,9 +90,9 @@ public class FiveStarOneColor {
     // 初始化着色器
     public void initShader(Context context) {
         //加载顶点着色器的脚本内容
-        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "vertex.sh");
+        mVertexShader = ShaderUtil.loadFromAssetsFile(context, "vertex.sh");
         //加载片元着色器的脚本内容
-        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "fragment.sh");
+        mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "fragment.sh");
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //获取程序中顶点位置属性引用id
@@ -104,15 +108,15 @@ public class FiveStarOneColor {
         // 指定使用某套着色器程序
         GLES30.glUseProgram(mProgram);
         //初始化变换矩阵
-        MatrixState.rotate(0, 0, 1, 0);
+        Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
         //设置沿Z轴正向位移1
-        MatrixState.translate(0, 0, 1);
+        Matrix.translateM(mMMatrix, 0, 0, 0, 1);
         //设置绕y轴旋转
-        MatrixState.rotate(yAngle, 0, 1, 0);
+        Matrix.rotateM(mMMatrix, 0, yAngle, 0, 1, 0);
         //设置绕z轴旋转
-        MatrixState.rotate(xAngle, 1, 0, 0);
+        Matrix.rotateM(mMMatrix, 0, xAngle, 1, 0, 0);
         //将最终变换矩阵传入渲染管线
-        GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0);
+        GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(mMMatrix), 0);
         //将顶点位置数据送入渲染管线
         GLES30.glVertexAttribPointer
                 (
@@ -130,4 +134,6 @@ public class FiveStarOneColor {
         //绘制六角星
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vCount);
     }
+
+
 }

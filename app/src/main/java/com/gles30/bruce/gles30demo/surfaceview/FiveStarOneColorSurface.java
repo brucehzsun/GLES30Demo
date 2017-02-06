@@ -1,16 +1,15 @@
 package com.gles30.bruce.gles30demo.surfaceview;
 
+import android.content.Context;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
-import android.content.Context;
-
 import com.gles30.bruce.gles30demo.modle.FiveStarOneColor;
 import com.gles30.bruce.gles30demo.util.MatrixState;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
 public class FiveStarOneColorSurface extends GLSurfaceView {
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;//角度缩放比例
@@ -77,7 +76,6 @@ public class FiveStarOneColorSurface extends GLSurfaceView {
 
             //调用此方法产生摄像机矩阵
             MatrixState.setCamera(0, 0, 6, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-            MatrixState.setInitStack();
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
