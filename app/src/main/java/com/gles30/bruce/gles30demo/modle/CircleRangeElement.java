@@ -1,15 +1,15 @@
 package com.gles30.bruce.gles30demo.modle;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-
 import android.content.Context;
 import android.opengl.GLES30;
 
 import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.MatrixState;
 import com.gles30.bruce.gles30demo.util.ShaderUtil;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 
 //颜色圆
 public class CircleRangeElement {
@@ -22,7 +22,6 @@ public class CircleRangeElement {
     FloatBuffer mColorBuffer;// 顶点着色数据缓冲
     private ByteBuffer mIndexBuffer;// 顶点索引数据缓冲
     int vCount = 0;//顶点数量
-    private int iCount = 0;//索引数量
 
     public CircleRangeElement(Context context) {//构造器
         // 初始化顶点坐标与着色数据
@@ -73,7 +72,7 @@ public class CircleRangeElement {
                 0, 7, 8,
                 0, 8, 1
         };
-        iCount = indices.length;
+        int iCount = indices.length;
 
         // 创建三角形构造索引数据缓冲
         mIndexBuffer = ByteBuffer.allocateDirect(indices.length);

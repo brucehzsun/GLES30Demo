@@ -24,23 +24,19 @@ public class CircleRangeSurface extends GLSurfaceView {
     private class SceneRenderer implements GLSurfaceView.Renderer {
         CircleRangeElement circle;//圆对象引用
 
-        public void onDrawFrame(GL10 gl) {
-            GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT    //清除深度缓冲与颜色缓冲
-                    | GLES30.GL_COLOR_BUFFER_BIT);
-            MatrixState.pushMatrix();                            //保护现场
-            //绘制圆
-            MatrixState.pushMatrix();                            //保护现场
-            MatrixState.translate(-1.2f, 0, 0);                    //沿x负方向平移
-            circle.drawSelf(0, 24);                            //绘制圆
-            MatrixState.popMatrix();                            //恢复现场
-            //绘制半个圆
-            MatrixState.pushMatrix();                            //保护现场
-            MatrixState.translate(1.2f, 0, 0);                    //沿x正方向平移
-            circle.drawSelf(6, 12);                            //绘制半个圆
-            MatrixState.popMatrix();                            //恢复现场
-            MatrixState.popMatrix();                            //恢复现场
+        @Override
+        public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+            //设置屏幕背景色RGBA
+            GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+            //创建圆对象
+            circle = new CircleRangeElement(getContext());
+            //打开深度检测
+            GLES30.glEnable(GLES30.GL_DEPTH_TEST);
+            //打开背面剪裁
+            GLES30.glEnable(GLES30.GL_CULL_FACE);
         }
 
+        @Override
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             //设置视口的大小及位置
             GLES30.glViewport(0, 0, width, height);
@@ -55,15 +51,26 @@ public class CircleRangeSurface extends GLSurfaceView {
             MatrixState.setInitStack();
         }
 
-        public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-            //设置屏幕背景色RGBA
-            GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-            //创建圆对象
-            circle = new CircleRangeElement(getContext());
-            //打开深度检测
-            GLES30.glEnable(GLES30.GL_DEPTH_TEST);
-            //打开背面剪裁
-            GLES30.glEnable(GLES30.GL_CULL_FACE);
+        @Override
+        public void onDrawFrame(GL10 gl) {
+            GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT    //清除深度缓冲与颜色缓冲
+                    | GLES30.GL_COLOR_BUFFER_BIT);
+            MatrixState.pushMatrix();                            //保护现场
+            //绘制圆
+            MatrixState.pushMatrix();                            //保护现场
+            MatrixState.translate(-1.2f, 0, 0);                    //沿x负方向平移
+            circle.drawSelf(0, 24);                            //绘制圆
+            MatrixState.popMatrix();                            //恢复现场
+
+            //绘制半个圆
+            MatrixState.pushMatrix();                            //保护现场
+            MatrixState.translate(1.2f, 0, 0);                    //沿x正方向平移
+            circle.drawSelf(6, 12);                            //绘制半个圆
+            MatrixState.popMatrix();                            //恢复现场
+
+            MatrixState.popMatrix();                            //恢复现场
         }
+
+
     }
 }
