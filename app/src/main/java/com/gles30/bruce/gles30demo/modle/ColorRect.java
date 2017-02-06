@@ -80,9 +80,9 @@ public class ColorRect {
     //初始化着色器
     public void initShader(Context context) {
         //加载顶点着色器的脚本内容
-        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "vertex.sh");
+        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "vertex2.sh");
         //加载片元着色器的脚本内容
-        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "fragment.sh");
+        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "frag2.sh");
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //获取程序中顶点位置属性引用id
