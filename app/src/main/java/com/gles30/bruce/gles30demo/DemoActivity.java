@@ -16,7 +16,7 @@ import com.gles30.bruce.gles30demo.surfaceview.FiveStarOneColorSurface;
 import com.gles30.bruce.gles30demo.surfaceview.LineSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.PolygonSurface;
 import com.gles30.bruce.gles30demo.surfaceview.TriangleGLSurfaceView;
-import com.gles30.bruce.gles30demo.ui.DemoType;
+import com.gles30.bruce.gles30demo.util.Constant.DemoType;
 
 
 /**

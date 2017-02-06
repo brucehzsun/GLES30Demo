@@ -15,4 +15,19 @@ public class Constant {
     public static final int GL_LINE_LOOP = 3;
 
     public static int CURR_DRAW_MODE = 0;//当前绘制方式
+
+    public static class DemoType {
+        public static String Triangle = "Triangle";
+        public static String FiveStar = "FiveStar";
+        public static String Cube = "Cube";
+        public static String Line = "Line";
+        public static String Circle = "Circle";
+        public static String Belt = "Belt";
+        public static String Element = "Element";
+        public static String RangeElement = "RangeElement";
+        public static String FiveStarOneColor = "FiveStarOneColor";
+        public static String Cube_6Rect = "Cube_6Rect";
+        public static String Cube2in1 = "Cube2in1";
+        public static String Polygon = "Element";
+    }
 }

@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.gles30.bruce.gles30demo.ui.DemoType;
 import com.gles30.bruce.gles30demo.ui.ListAdapter;
+import com.gles30.bruce.gles30demo.util.Constant.DemoType;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
