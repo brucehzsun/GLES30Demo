@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
         recyclerView2.setLayoutManager(new LinearLayoutManager(this));
         ArrayList<String> data = new ArrayList<>();
         data.add(Constant.LightType.ball);
+        data.add(Constant.LightType.ball_diffuse);
         ListAdapter adapter = new ListAdapter(this, data);
         recyclerView2.setAdapter(adapter);
     }

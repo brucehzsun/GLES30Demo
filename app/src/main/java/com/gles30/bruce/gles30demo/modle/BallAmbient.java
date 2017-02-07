@@ -13,7 +13,7 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 //球
-public class Ball {
+public class BallAmbient {
     private int mProgram;// 自定义渲染管线着色器程序id
     private int muMVPMatrixLocation;//总变换矩阵引用
     private int maPositionLocation; //顶点位置属性引用
@@ -25,7 +25,7 @@ public class Ball {
     public float xAngle = 0;// 绕x轴旋转的角度
     private float r = 0.8f;
 
-    public Ball(Context context) {
+    public BallAmbient(Context context) {
         // 初始化顶点数据的方法
         initVertexData();
         // 初始化着色器的方法

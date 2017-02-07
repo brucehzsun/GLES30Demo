@@ -33,5 +33,6 @@ public class Constant {
 
     public static class LightType {
         public static String ball = "ball_ambient";
+        public static String ball_diffuse = "ball_diffuse";
     }
 }

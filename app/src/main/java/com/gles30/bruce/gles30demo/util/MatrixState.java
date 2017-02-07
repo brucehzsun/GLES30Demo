@@ -2,6 +2,10 @@ package com.gles30.bruce.gles30demo.util;
 
 import android.opengl.Matrix;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
 //管理系统矩阵状态的类
 public class MatrixState {
     private static float[] mProjMatrix = new float[16];//4x4矩阵 投影用
@@ -12,6 +16,10 @@ public class MatrixState {
     private static int stackTop = -1;//栈顶索引
     //获取具体物体的总变换矩阵
     private static float[] mMVPMatrix = new float[16];//总变换矩阵
+
+    public static FloatBuffer lightPositionFB;
+
+    public static float[] lightLocation = new float[]{0, 0, 0};//光源位置数组
 
     /**
      * 产生无任何变换的初始矩阵
@@ -48,8 +56,6 @@ public class MatrixState {
         Matrix.translateM(currMatrix, 0, x, y, z);
     }
 
-    //设置摄像机
-//    static ByteBuffer llbb = ByteBuffer.allocateDirect(3 * 4);
 //    static float[] cameraLocation = new float[3];//摄像机位置
 
     /**
@@ -74,6 +80,7 @@ public class MatrixState {
                 upx, upy, upz    //up向量在X、Y、Z轴上的分量
         );
     }
+
 
     /**
      * 设置透视投影参数
@@ -104,7 +111,6 @@ public class MatrixState {
         Matrix.orthoM(mProjMatrix, 0, left, right, bottom, top, near, far);
     }
 
-
     /**
      * 计算产生总变换矩阵的方法
      *
@@ -118,6 +124,7 @@ public class MatrixState {
         return mMVPMatrix;
     }
 
+
     /**
      * 获取具体物体的变换矩阵
      *
@@ -126,7 +133,6 @@ public class MatrixState {
     public static float[] getMMatrix() {
         return currMatrix;
     }
-
 
     public static void translate(float x, int y, int z) {
         Matrix.translateM(currMatrix, 0, x, y, z);
@@ -149,4 +155,17 @@ public class MatrixState {
         Matrix.scaleM(currMatrix, 0, x, y, z);
     }
 
+    public static void setLightLocation(float x, float y, float z) {
+        if (lightPositionFB == null) {
+            lightPositionFB = ByteBuffer.allocateDirect(3 * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        }
+
+        lightLocation[0] = x;
+        lightLocation[1] = y;
+        lightLocation[2] = z;
+
+        lightPositionFB.clear();
+        lightPositionFB.put(lightLocation);
+        lightPositionFB.position(0);
+    }
 }

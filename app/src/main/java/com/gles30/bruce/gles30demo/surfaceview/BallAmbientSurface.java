@@ -5,21 +5,21 @@ import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
-import com.gles30.bruce.gles30demo.modle.Ball;
+import com.gles30.bruce.gles30demo.modle.BallAmbient;
 import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.MatrixState;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class BallSurface extends GLSurfaceView {
+public class BallAmbientSurface extends GLSurfaceView {
     private static final float TOUCH_SCALE_FACTOR = 180.0f / 320;//角度缩放比例
-    Ball ball;//球
+    BallAmbient ball;//球
 
     private float mPreviousY;//上次的触控位置Y坐标
     private float mPreviousX;//上次的触控位置X坐标
 
-    public BallSurface(Context context) {
+    public BallAmbientSurface(Context context) {
         super(context);
         this.setEGLContextClientVersion(3); //设置使用OPENGL ES3.0
         SceneRenderer mRenderer = new SceneRenderer();
@@ -51,7 +51,7 @@ public class BallSurface extends GLSurfaceView {
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0f, 0f, 0f, 1.0f);
             //创建球对象
-            ball = new Ball(getContext());
+            ball = new BallAmbient(getContext());
             //打开深度检测
             GLES30.glEnable(GLES30.GL_DEPTH_TEST);
             //打开背面剪裁
