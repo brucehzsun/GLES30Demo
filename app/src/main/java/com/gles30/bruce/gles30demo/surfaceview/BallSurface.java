@@ -75,15 +75,21 @@ public class BallSurface extends GLSurfaceView {
             MatrixState.setInitStack();
         }
 
+        @Override
         public void onDrawFrame(GL10 gl) {
             //清除深度缓冲与颜色缓冲
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
-            //保护现场
-            MatrixState.pushMatrix();
-            //绘制球
-            MatrixState.pushMatrix();
-            ball.drawSelf();
-            MatrixState.popMatrix();
+
+            MatrixState.pushMatrix(); //保护现场
+            MatrixState.pushMatrix();//保护现场
+            MatrixState.translate(-1.2f, 0, 0);//沿x轴负方向平移
+            ball.drawSelf();    //绘制球
+            MatrixState.popMatrix();       //恢复现场
+
+            MatrixState.pushMatrix();//保护现场
+            MatrixState.translate(1.2f, 0, 0);//沿x轴正方向平移
+            ball.drawSelf();    //绘制球
+            MatrixState.popMatrix();     //恢复现场
             //恢复现场
             MatrixState.popMatrix();
         }

@@ -99,9 +99,9 @@ public class Ball {
     // 初始化着色器
     public void initShader(Context context) {
         // 加载顶点着色器的脚本内容
-        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "vertex_light.sh");
+        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "vertex_ambient.sh");
         // 加载片元着色器的脚本内容
-        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "frag_light.sh");
+        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "frag_ambient.sh");
         // 基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         // 获取程序中顶点位置属性引用
