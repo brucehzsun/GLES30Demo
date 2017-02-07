@@ -143,7 +143,7 @@ public class BallDiffuse {
         // 将半径尺寸传入渲染管线
         GLES30.glUniform1f(muRLocation, r * Constant.UNIT_SIZE);
         //将光源位置传入渲染管线
-        GLES30.glUniform3fv(maLightLocationLocation, 1, MatrixState.lightPositionFB);
+        GLES30.glUniform3fv(maLightLocationLocation, 1, MatrixState.getLightPositionFloatBuffer());
 
         // 将顶点位置数据传入渲染管线
         GLES30.glVertexAttribPointer(maPositionLocation, 3, GLES30.GL_FLOAT, false, 3 * 4, mVertexBuffer);

@@ -17,9 +17,10 @@ public class MatrixState {
     //获取具体物体的总变换矩阵
     private static float[] mMVPMatrix = new float[16];//总变换矩阵
 
-    public static FloatBuffer lightPositionFB;
 
-    public static float[] lightLocation = new float[]{0, 0, 0};//光源位置数组
+    private static FloatBuffer lightPositionFloatBuffer;
+
+    private static float[] lightLocation = new float[]{0, 0, 0};//光源位置数组
 
     /**
      * 产生无任何变换的初始矩阵
@@ -156,16 +157,20 @@ public class MatrixState {
     }
 
     public static void setLightLocation(float x, float y, float z) {
-        if (lightPositionFB == null) {
-            lightPositionFB = ByteBuffer.allocateDirect(3 * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
+        if (lightPositionFloatBuffer == null) {
+            lightPositionFloatBuffer = ByteBuffer.allocateDirect(3 * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
         }
 
         lightLocation[0] = x;
         lightLocation[1] = y;
         lightLocation[2] = z;
 
-        lightPositionFB.clear();
-        lightPositionFB.put(lightLocation);
-        lightPositionFB.position(0);
+        lightPositionFloatBuffer.clear();
+        lightPositionFloatBuffer.put(lightLocation);
+        lightPositionFloatBuffer.position(0);
+    }
+
+    public static FloatBuffer getLightPositionFloatBuffer() {
+        return lightPositionFloatBuffer;
     }
 }
