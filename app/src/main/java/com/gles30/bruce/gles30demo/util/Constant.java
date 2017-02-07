@@ -30,4 +30,8 @@ public class Constant {
         public static String Cube2in1 = "Cube2in1";
         public static String Polygon = "Element";
     }
+
+    public static class LightType {
+        public static String ball = "ball";
+    }
 }

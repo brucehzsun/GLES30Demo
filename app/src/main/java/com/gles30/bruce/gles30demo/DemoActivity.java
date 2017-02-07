@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
+import com.gles30.bruce.gles30demo.surfaceview.BallSurface;
 import com.gles30.bruce.gles30demo.surfaceview.BeltGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.CircleGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.CircleRangeSurface;
@@ -16,6 +17,7 @@ import com.gles30.bruce.gles30demo.surfaceview.FiveStarOneColorSurface;
 import com.gles30.bruce.gles30demo.surfaceview.LineSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.PolygonSurface;
 import com.gles30.bruce.gles30demo.surfaceview.TriangleGLSurfaceView;
+import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.Constant.DemoType;
 
 
@@ -60,6 +62,8 @@ public class DemoActivity extends Activity {
             surfaceView = new Cube2Surface(this);
         } else if (type.equals(DemoType.Polygon)) {
             surfaceView = new PolygonSurface(this);
+        } else if (type.equals(Constant.LightType.ball)) {
+            surfaceView = new BallSurface(this);
         }
     }
 
