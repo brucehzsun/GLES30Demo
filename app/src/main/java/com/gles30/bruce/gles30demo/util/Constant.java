@@ -39,4 +39,8 @@ public class Constant {
         public static String ball_direction = "ball_direction";
         public static String cube_light = "cube_light";
     }
+
+    public static class TextureType {
+        public static String texture_triangle = "texture_triangle";
+    }
 }

@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
         recyclerView.setAdapter(adapter);
 
         initList2();
+        initList3();
     }
 
     private void initList2() {
@@ -53,6 +54,15 @@ public class MainActivity extends Activity {
         data.add(Constant.LightType.cube_light);
         ListAdapter adapter = new ListAdapter(this, data);
         recyclerView2.setAdapter(adapter);
+    }
+
+    private void initList3() {
+        RecyclerView recyclerView3 = (RecyclerView) findViewById(R.id.recyclerView3);
+        recyclerView3.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<String> data = new ArrayList<>();
+        data.add(Constant.TextureType.texture_triangle);
+        ListAdapter adapter = new ListAdapter(this, data);
+        recyclerView3.setAdapter(adapter);
     }
 
 }

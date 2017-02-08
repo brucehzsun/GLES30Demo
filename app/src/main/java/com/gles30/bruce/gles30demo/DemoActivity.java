@@ -3,12 +3,28 @@ package com.gles30.bruce.gles30demo;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
-import com.gles30.bruce.gles30demo.surfaceview.*;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallAllLightSurface;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallAmbientSurface;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallDiffuseSurface;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallDirectionSurface;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallSpecularSurface;
+import com.gles30.bruce.gles30demo.surfaceview.base.BeltGLSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.base.CircleGLSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.base.CircleRangeSurface;
+import com.gles30.bruce.gles30demo.surfaceview.base.Cube2Surface;
+import com.gles30.bruce.gles30demo.surfaceview.base.CubeGLSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.base.CubeLightSurface;
+import com.gles30.bruce.gles30demo.surfaceview.base.Cube_6RectSurface;
+import com.gles30.bruce.gles30demo.surfaceview.base.ElementSurface;
+import com.gles30.bruce.gles30demo.surfaceview.base.FiveStarGLSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.base.FiveStarOneColorSurface;
+import com.gles30.bruce.gles30demo.surfaceview.base.LineSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.base.PolygonSurface;
+import com.gles30.bruce.gles30demo.surfaceview.base.TriangleGLSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.texture.TextureTriangleSurface;
 import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.Constant.DemoType;
 
@@ -98,6 +114,8 @@ public class DemoActivity extends Activity {
             surfaceView = new BallDirectionSurface(this);
         } else if (type.equals(Constant.LightType.cube_light)) {
             surfaceView = new CubeLightSurface(this);
+        } else if (type.equals(Constant.TextureType.texture_triangle)) {
+            surfaceView = new TextureTriangleSurface(this);
         }
         rootLayout.addView(surfaceView);
     }
