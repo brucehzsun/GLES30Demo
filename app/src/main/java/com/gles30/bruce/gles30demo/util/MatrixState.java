@@ -22,6 +22,9 @@ public class MatrixState {
 
     private static float[] lightLocation = new float[]{0, 0, 0};//光源位置数组
 
+
+    private static FloatBuffer cameraFloatBuffer;
+
     /**
      * 产生无任何变换的初始矩阵
      */
@@ -59,6 +62,10 @@ public class MatrixState {
 
 //    static float[] cameraLocation = new float[3];//摄像机位置
 
+    //设置摄像机
+    static ByteBuffer llbb = ByteBuffer.allocateDirect(3 * 4);
+    static float[] cameraLocation = new float[3];//摄像机位置
+
     /**
      * 设置摄像机的方法
      *
@@ -80,6 +87,15 @@ public class MatrixState {
                 tx, ty, tz,    //观察目标点X、Y、Z坐标
                 upx, upy, upz    //up向量在X、Y、Z轴上的分量
         );
+        cameraLocation[0] = cx;
+        cameraLocation[1] = cy;
+        cameraLocation[2] = cz;
+
+        llbb.clear();//清除摄像机位置缓冲
+        llbb.order(ByteOrder.nativeOrder());//设置字节顺序
+        cameraFloatBuffer = llbb.asFloatBuffer();//转换为float型缓冲
+        cameraFloatBuffer.put(cameraLocation);//将摄像机位置放入缓冲
+        cameraFloatBuffer.position(0);  //设置缓冲的起始位置
     }
 
 
@@ -172,5 +188,9 @@ public class MatrixState {
 
     public static FloatBuffer getLightPositionFloatBuffer() {
         return lightPositionFloatBuffer;
+    }
+
+    public static FloatBuffer getCameraFloatBuffer() {
+        return cameraFloatBuffer;
     }
 }

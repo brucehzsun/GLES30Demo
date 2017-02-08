@@ -8,20 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
-import com.gles30.bruce.gles30demo.surfaceview.BallAmbientSurface;
-import com.gles30.bruce.gles30demo.surfaceview.BallDiffuseSurface;
-import com.gles30.bruce.gles30demo.surfaceview.BeltGLSurfaceView;
-import com.gles30.bruce.gles30demo.surfaceview.CircleGLSurfaceView;
-import com.gles30.bruce.gles30demo.surfaceview.CircleRangeSurface;
-import com.gles30.bruce.gles30demo.surfaceview.Cube2Surface;
-import com.gles30.bruce.gles30demo.surfaceview.CubeGLSurfaceView;
-import com.gles30.bruce.gles30demo.surfaceview.Cube_6RectSurface;
-import com.gles30.bruce.gles30demo.surfaceview.ElementSurface;
-import com.gles30.bruce.gles30demo.surfaceview.FiveStarGLSurfaceView;
-import com.gles30.bruce.gles30demo.surfaceview.FiveStarOneColorSurface;
-import com.gles30.bruce.gles30demo.surfaceview.LineSurfaceView;
-import com.gles30.bruce.gles30demo.surfaceview.PolygonSurface;
-import com.gles30.bruce.gles30demo.surfaceview.TriangleGLSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.*;
 import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.Constant.DemoType;
 
@@ -51,6 +38,8 @@ public class DemoActivity extends Activity {
                                                   boolean fromUser) {
                         if (surfaceView instanceof BallDiffuseSurface) {
                             ((BallDiffuseSurface) surfaceView).setLightOffset((seekBar.getMax() / 2.0f - progress) / (seekBar.getMax() / 2.0f) * -4);
+                        } else if (surfaceView instanceof BallSpecularSurface) {
+                            ((BallSpecularSurface) surfaceView).setLightOffset((seekBar.getMax() / 2.0f - progress) / (seekBar.getMax() / 2.0f) * -4);
                         }
                     }
 
@@ -95,6 +84,8 @@ public class DemoActivity extends Activity {
             surfaceView = new BallAmbientSurface(this);
         } else if (type.equals(Constant.LightType.ball_diffuse)) {
             surfaceView = new BallDiffuseSurface(this);
+        } else if (type.equals(Constant.LightType.ball_specular)) {
+            surfaceView = new BallSpecularSurface(this);
         }
         rootLayout.addView(surfaceView);
     }
