@@ -2,6 +2,7 @@ package com.gles30.bruce.gles30demo.modle;
 
 import android.content.Context;
 import android.opengl.GLES30;
+
 import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.MatrixState;
 import com.gles30.bruce.gles30demo.util.ShaderUtil;
@@ -110,9 +111,9 @@ public class BallSpecular {
     // 初始化着色器
     public void initShader(Context context) {
         // 加载顶点着色器的脚本内容
-        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "vertex_diffuse.sh");
+        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "vertex_specular.sh");
         // 加载片元着色器的脚本内容
-        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "frag_diffuse.sh");
+        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "frag_specular.sh");
         // 基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         // 获取程序中顶点位置属性引用
