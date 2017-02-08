@@ -107,8 +107,6 @@ public class TextureRect {
     public void drawSelf(int texId) {
         //指定使用某套shader程序
         GLES30.glUseProgram(mProgram);
-        //初始化变换矩阵
-        MatrixState.setInitStack();
         //设置沿Z轴正向位移1
         MatrixState.translate(0, 0, 1);
         //设置绕y轴旋转

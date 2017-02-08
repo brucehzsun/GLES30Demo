@@ -138,14 +138,18 @@ public class TextureRectSurface extends GLSurfaceView {
             MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 1, 10);
             //调用此方法产生摄像机9参数位置矩阵
             MatrixState.setCamera(0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+            //初始化变换矩阵
+            MatrixState.setInitStack();
         }
 
         @Override
         public void onDrawFrame(GL10 gl) {
             //清除深度缓冲与颜色缓冲
             GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT | GLES30.GL_COLOR_BUFFER_BIT);
+            MatrixState.pushMatrix();
             //绘制当前纹理矩形
             texRect[trIndex].drawSelf(currTextureId);
+            MatrixState.popMatrix();
         }
 
     }
