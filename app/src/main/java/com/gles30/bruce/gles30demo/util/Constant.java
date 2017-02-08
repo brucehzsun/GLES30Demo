@@ -35,5 +35,6 @@ public class Constant {
         public static String ball = "ball_ambient";
         public static String ball_diffuse = "ball_diffuse";
         public static String ball_specular = "ball_specular";
+        public static String ball_all = "ball_all";
     }
 }

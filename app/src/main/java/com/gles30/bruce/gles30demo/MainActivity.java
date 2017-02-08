@@ -48,6 +48,7 @@ public class MainActivity extends Activity {
         data.add(Constant.LightType.ball);
         data.add(Constant.LightType.ball_diffuse);
         data.add(Constant.LightType.ball_specular);
+        data.add(Constant.LightType.ball_all);
         ListAdapter adapter = new ListAdapter(this, data);
         recyclerView2.setAdapter(adapter);
     }

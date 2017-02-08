@@ -40,6 +40,8 @@ public class DemoActivity extends Activity {
                             ((BallDiffuseSurface) surfaceView).setLightOffset((seekBar.getMax() / 2.0f - progress) / (seekBar.getMax() / 2.0f) * -4);
                         } else if (surfaceView instanceof BallSpecularSurface) {
                             ((BallSpecularSurface) surfaceView).setLightOffset((seekBar.getMax() / 2.0f - progress) / (seekBar.getMax() / 2.0f) * -4);
+                        } else if (surfaceView instanceof BallAllLightSurface) {
+                            ((BallAllLightSurface) surfaceView).setLightOffset((seekBar.getMax() / 2.0f - progress) / (seekBar.getMax() / 2.0f) * -4);
                         }
                     }
 
@@ -86,6 +88,8 @@ public class DemoActivity extends Activity {
             surfaceView = new BallDiffuseSurface(this);
         } else if (type.equals(Constant.LightType.ball_specular)) {
             surfaceView = new BallSpecularSurface(this);
+        } else if (type.equals(Constant.LightType.ball_all)) {
+            surfaceView = new BallAllLightSurface(this);
         }
         rootLayout.addView(surfaceView);
     }
