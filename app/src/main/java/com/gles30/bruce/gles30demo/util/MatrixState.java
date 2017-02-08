@@ -142,6 +142,15 @@ public class MatrixState {
     }
 
 
+    //获取具体物体的总变换矩阵
+    public static float[] getFinalMatrix(float[] spec) {
+        mMVPMatrix = new float[16];
+        Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, spec, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mMVPMatrix, 0);
+        return mMVPMatrix;
+    }
+
+
     /**
      * 获取具体物体的变换矩阵
      *

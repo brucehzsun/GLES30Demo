@@ -1,33 +1,37 @@
 package com.gles30.bruce.gles30demo.modle.texture;
 
-import android.content.Context;
-import android.opengl.GLES30;
-
-import com.gles30.bruce.gles30demo.util.MatrixState;
-import com.gles30.bruce.gles30demo.util.ShaderUtil;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import android.content.Context;
+import android.opengl.GLES30;
+import android.opengl.Matrix;
+
+import com.gles30.bruce.gles30demo.util.MatrixState;
+import com.gles30.bruce.gles30demo.util.ShaderUtil;
+
 //纹理矩形
 public class TextureRect {
-    private int mProgram;//自定义渲染管线程序id
-    private int muMVPMatrixHandle;//总变换矩阵引用
-    private int maPositionHandle; //顶点位置属性引用
-    private int maTexCoorHandle; //顶点纹理坐标属性引用
+    int mProgram;//自定义渲染管线程序id
+    int muMVPMatrixHandle;//总变换矩阵引用
+    int maPositionHandle; //顶点位置属性引用
+    int maTexCoorHandle; //顶点纹理坐标属性引用
+    String mVertexShader;//顶点着色器代码脚本
+    String mFragmentShader;//片元着色器代码脚本
+    static float[] mMMatrix = new float[16];//具体物体的3D变换矩阵，包括旋转、平移、缩放
 
-    private FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
-    private FloatBuffer mTexCoorBuffer;//顶点纹理坐标数据缓冲
-    private int vCount = 0;
-    private static final float xAngle = 0;//绕x轴旋转的角度
+    FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
+    FloatBuffer mTexCoorBuffer;//顶点纹理坐标数据缓冲
+    int vCount = 0;
+    float xAngle = 0;//绕x轴旋转的角度
     public float yAngle = 0;//绕y轴旋转的角度
     public float zAngle = 0;//绕z轴旋转的角度
 
-    private float sRange;//s纹理坐标范围
-    private float tRange;//t纹理坐标范围
+    float sRange;//s纹理坐标范围
+    float tRange;//t纹理坐标范围
 
-    public TextureRect(Context context, float sRange, float tRange) {
+    public TextureRect(Context mv, float sRange, float tRange) {
         //接收s纹理坐标范围
         this.sRange = sRange;
         //接收t纹理坐标范围
@@ -36,7 +40,7 @@ public class TextureRect {
         //调用初始化顶点数据的initVertexData方法
         initVertexData();
         //调用初始化着色器的initShader方法
-        initShader(context);
+        initShader(mv);
     }
 
     //初始化顶点数据的initVertexData方法
@@ -87,9 +91,9 @@ public class TextureRect {
     //自定义的初始化着色器的方法
     public void initShader(Context context) {
         //加载顶点着色器的脚本内容
-        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "texture/frag_texture_rect.sh");
+        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "texture/vertex_texture_rect.sh");
         //加载片元着色器的脚本内容
-        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "texture/vertex_textrue_rect.sh");
+        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "texture/frag_texture_rect.sh");
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //获取程序中顶点位置属性引用
@@ -103,16 +107,18 @@ public class TextureRect {
     public void drawSelf(int texId) {
         //指定使用某套shader程序
         GLES30.glUseProgram(mProgram);
+        //初始化变换矩阵
+        Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
         //设置沿Z轴正向位移1
-        MatrixState.translate(0, 0, 1);
+        Matrix.translateM(mMMatrix, 0, 0, 0, 1);
         //设置绕y轴旋转
-        MatrixState.rotate(yAngle, 0, 1, 0);
+        Matrix.rotateM(mMMatrix, 0, yAngle, 0, 1, 0);
         //设置绕z轴旋转
-        MatrixState.rotate(zAngle, 0, 0, 1);
+        Matrix.rotateM(mMMatrix, 0, zAngle, 0, 0, 1);
         //设置绕x轴旋转
-        MatrixState.rotate(xAngle, 1, 0, 0);
+        Matrix.rotateM(mMMatrix, 0, xAngle, 1, 0, 0);
         //将最终变换矩阵传入渲染管线
-        GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0);
+        GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(mMMatrix), 0);
         //将顶点位置数据传送进渲染管线
         GLES30.glVertexAttribPointer
                 (
