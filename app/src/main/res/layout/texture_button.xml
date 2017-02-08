@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.gles30.bruce.gles30demo.MainActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/RadioGroup01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="拉  伸  方  式 ："
+                android:textSize="16dip"></TextView>
+
+            <RadioButton
+                android:id="@+id/edge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EDGE"></RadioButton>
+
+            <RadioButton
+                android:id="@+id/repeat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="REPEAT" />
+
+            <RadioButton
+                android:id="@+id/mirror"
+                android:layout_height="wrap_content"
+                android:text="MIRRORED_REPEAT" />
+
+        </RadioGroup>
+
+
+        <RadioGroup
+            android:id="@+id/RadioGroup02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="纹理坐标尺寸："
+                android:textSize="16dip"></TextView>
+
+            <RadioButton
+                android:id="@+id/x11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1x1"></RadioButton>
+
+            <RadioButton
+                android:id="@+id/x42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4x2"></RadioButton>
+
+            <RadioButton
+                android:id="@+id/x44"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="4x4"></RadioButton>
+        </RadioGroup>
+    </LinearLayout>
+</RelativeLayout>

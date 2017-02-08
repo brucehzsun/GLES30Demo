@@ -3,14 +3,13 @@ package com.gles30.bruce.gles30demo;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
-import com.gles30.bruce.gles30demo.surfaceview.light.BallAllLightSurface;
-import com.gles30.bruce.gles30demo.surfaceview.light.BallAmbientSurface;
-import com.gles30.bruce.gles30demo.surfaceview.light.BallDiffuseSurface;
-import com.gles30.bruce.gles30demo.surfaceview.light.BallDirectionSurface;
-import com.gles30.bruce.gles30demo.surfaceview.light.BallSpecularSurface;
 import com.gles30.bruce.gles30demo.surfaceview.base.BeltGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.base.CircleGLSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.base.CircleRangeSurface;
@@ -24,6 +23,12 @@ import com.gles30.bruce.gles30demo.surfaceview.base.FiveStarOneColorSurface;
 import com.gles30.bruce.gles30demo.surfaceview.base.LineSurfaceView;
 import com.gles30.bruce.gles30demo.surfaceview.base.PolygonSurface;
 import com.gles30.bruce.gles30demo.surfaceview.base.TriangleGLSurfaceView;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallAllLightSurface;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallAmbientSurface;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallDiffuseSurface;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallDirectionSurface;
+import com.gles30.bruce.gles30demo.surfaceview.light.BallSpecularSurface;
+import com.gles30.bruce.gles30demo.surfaceview.texture.TextureRectSurface;
 import com.gles30.bruce.gles30demo.surfaceview.texture.TextureTriangleSurface;
 import com.gles30.bruce.gles30demo.util.Constant;
 import com.gles30.bruce.gles30demo.util.Constant.DemoType;
@@ -45,6 +50,11 @@ public class DemoActivity extends Activity {
         rootLayout = (RelativeLayout) findViewById(R.id.activity_demo_root);
         initData();
 
+        initButton();
+        initSeekBar();
+    }
+
+    private void initSeekBar() {
         //普通拖拉条被拉动的处理代码
         SeekBar sb = (SeekBar) findViewById(R.id.seekbar);
         sb.setOnSeekBarChangeListener(
@@ -116,6 +126,8 @@ public class DemoActivity extends Activity {
             surfaceView = new CubeLightSurface(this);
         } else if (type.equals(Constant.TextureType.texture_triangle)) {
             surfaceView = new TextureTriangleSurface(this);
+        } else if (type.equals(Constant.TextureType.texture_rect)) {
+            surfaceView = new TextureRectSurface(this);
         }
         rootLayout.addView(surfaceView);
     }
@@ -130,5 +142,92 @@ public class DemoActivity extends Activity {
     protected void onPause() {
         super.onPause();
         surfaceView.onPause();
+    }
+
+    private void initButton() {
+
+        final TextureRectSurface mGLSurfaceView;
+        if (surfaceView instanceof TextureRectSurface) {
+            mGLSurfaceView = (TextureRectSurface) surfaceView;
+            View buttonlayout = LayoutInflater.from(this).inflate(R.layout.texture_button, null);
+            rootLayout.addView(buttonlayout);
+        } else {
+            return;
+        }
+
+
+        //为RadioButton添加监听器及SxT选择代码
+        RadioButton rab = (RadioButton) findViewById(R.id.edge);
+        rab.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        //GL_CLAMP_TO_EDGE模式下
+                        if (isChecked) {
+                            mGLSurfaceView.currTextureId = mGLSurfaceView.textureCTId;
+                        }
+                    }
+                }
+        );
+        rab = (RadioButton) findViewById(R.id.repeat);
+        rab.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        //GL_REPEAT模式下
+                        if (isChecked) {
+                            mGLSurfaceView.currTextureId = mGLSurfaceView.textureREId;
+                        }
+                    }
+                }
+        );
+
+        rab = (RadioButton) findViewById(R.id.mirror);
+        rab.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        //GL_REPEAT模式下
+                        if (isChecked) {
+                            mGLSurfaceView.currTextureId = mGLSurfaceView.textureMIId;
+                        }
+                    }
+                }
+        );
+
+        //为RadioButton添加监听器及SxT选择代码
+        RadioButton rb = (RadioButton) findViewById(R.id.x11);
+        rb.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {//设置为纹理坐标SxT=1x1
+                            mGLSurfaceView.trIndex = 0;
+                        }
+                    }
+                }
+        );
+        rb = (RadioButton) findViewById(R.id.x42);
+        rb.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {//设置为纹理坐标SxT=4x2
+                            mGLSurfaceView.trIndex = 1;
+                        }
+                    }
+                }
+        );
+        rb = (RadioButton) findViewById(R.id.x44);
+        rb.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {//设置为纹理坐标SxT=4x4
+                            mGLSurfaceView.trIndex = 2;
+                        }
+                    }
+                }
+        );
     }
 }
