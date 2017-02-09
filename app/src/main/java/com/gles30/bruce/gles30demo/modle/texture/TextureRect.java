@@ -91,9 +91,9 @@ public class TextureRect {
     //自定义的初始化着色器的方法
     public void initShader(Context context) {
         //加载顶点着色器的脚本内容
-        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "texture/vertex_texture_rect.sh");
+        String mVertexShader = ShaderUtil.loadFromAssetsFile(context, "texture/vertex.sh");
         //加载片元着色器的脚本内容
-        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "texture/frag_texture_rect.sh");
+        String mFragmentShader = ShaderUtil.loadFromAssetsFile(context, "texture/frag.sh");
         //基于顶点着色器与片元着色器创建程序
         mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
         //获取程序中顶点位置属性引用
