@@ -6,7 +6,13 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
+import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 
 import com.gles30.bruce.gles30demo.R;
 import com.gles30.bruce.gles30demo.modle.texture.TextureRect;
@@ -21,13 +27,14 @@ public class TextureRectSurface extends GLSurfaceView {
     private float mPreviousY;//上次的触控位置Y坐标
     private float mPreviousX;//上次的触控位置X坐标
 
-    public int textureCTId;//系统分配的拉伸纹理id
-    public int textureREId;//系统分配的重复纹理id
-    public int textureMIId;//系统分配的镜像纹理id
-    public int currTextureId;//当前纹理id
+    private int textureCTId;//系统分配的拉伸纹理id
+    private int textureREId;//系统分配的重复纹理id
+    private int textureMIId;//系统分配的镜像纹理id
+    private int currTextureId;//当前纹理id
 
     TextureRect[] texRect = new TextureRect[3];//纹理矩形数组
-    public int trIndex = 2;//当前纹理矩形索引
+    private int trIndex = 2;//当前纹理矩形索引
+    private Handler handler = new Handler();
 
     public TextureRectSurface(Context context) {
         super(context);
@@ -109,6 +116,8 @@ public class TextureRectSurface extends GLSurfaceView {
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+
+
             //设置屏幕背景色RGBA
             GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             //创建三个纹理矩形对对象
@@ -127,6 +136,12 @@ public class TextureRectSurface extends GLSurfaceView {
             currTextureId = textureCTId;
             //关闭背面剪裁
             GLES30.glDisable(GLES30.GL_CULL_FACE);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    initButton();
+                }
+            });
         }
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -140,6 +155,7 @@ public class TextureRectSurface extends GLSurfaceView {
             MatrixState.setCamera(0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
             //初始化变换矩阵
             MatrixState.setInitStack();
+
         }
 
         @Override
@@ -152,5 +168,87 @@ public class TextureRectSurface extends GLSurfaceView {
             MatrixState.popMatrix();
         }
 
+    }
+
+
+    public void initButton() {
+
+        View buttonlayout = LayoutInflater.from(getContext()).inflate(R.layout.texture_button, null);
+        ((ViewGroup) this.getParent()).addView(buttonlayout);
+
+
+        //为RadioButton添加监听器及SxT选择代码
+        RadioButton rab = (RadioButton) buttonlayout.findViewById(R.id.edge);
+        rab.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        //GL_CLAMP_TO_EDGE模式下
+                        if (isChecked) {
+                            currTextureId = textureCTId;
+                        }
+                    }
+                }
+        );
+        rab = (RadioButton) buttonlayout.findViewById(R.id.repeat);
+        rab.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        //GL_REPEAT模式下
+                        if (isChecked) {
+                            currTextureId = textureREId;
+                        }
+                    }
+                }
+        );
+
+        rab = (RadioButton) buttonlayout.findViewById(R.id.mirror);
+        rab.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        //GL_REPEAT模式下
+                        if (isChecked) {
+                            currTextureId = textureMIId;
+                        }
+                    }
+                }
+        );
+
+        //为RadioButton添加监听器及SxT选择代码
+        RadioButton rb = (RadioButton) buttonlayout.findViewById(R.id.x11);
+        rb.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {//设置为纹理坐标SxT=1x1
+                            trIndex = 0;
+                        }
+                    }
+                }
+        );
+        rb = (RadioButton) buttonlayout.findViewById(R.id.x42);
+        rb.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {//设置为纹理坐标SxT=4x2
+                            trIndex = 1;
+                        }
+                    }
+                }
+        );
+        rb = (RadioButton) buttonlayout.findViewById(R.id.x44);
+        rb.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {//设置为纹理坐标SxT=4x4
+                            trIndex = 2;
+                        }
+                    }
+                }
+        );
     }
 }

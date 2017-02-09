@@ -3,10 +3,6 @@ package com.gles30.bruce.gles30demo;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
@@ -50,7 +46,6 @@ public class DemoActivity extends Activity {
         rootLayout = (RelativeLayout) findViewById(R.id.activity_demo_root);
         initData();
 
-        initButton();
         initSeekBar();
     }
 
@@ -144,90 +139,5 @@ public class DemoActivity extends Activity {
         surfaceView.onPause();
     }
 
-    private void initButton() {
 
-        final TextureRectSurface mGLSurfaceView;
-        if (surfaceView instanceof TextureRectSurface) {
-            mGLSurfaceView = (TextureRectSurface) surfaceView;
-            View buttonlayout = LayoutInflater.from(this).inflate(R.layout.texture_button, null);
-            rootLayout.addView(buttonlayout);
-        } else {
-            return;
-        }
-
-
-        //为RadioButton添加监听器及SxT选择代码
-        RadioButton rab = (RadioButton) findViewById(R.id.edge);
-        rab.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        //GL_CLAMP_TO_EDGE模式下
-                        if (isChecked) {
-                            mGLSurfaceView.currTextureId = mGLSurfaceView.textureCTId;
-                        }
-                    }
-                }
-        );
-        rab = (RadioButton) findViewById(R.id.repeat);
-        rab.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        //GL_REPEAT模式下
-                        if (isChecked) {
-                            mGLSurfaceView.currTextureId = mGLSurfaceView.textureREId;
-                        }
-                    }
-                }
-        );
-
-        rab = (RadioButton) findViewById(R.id.mirror);
-        rab.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        //GL_REPEAT模式下
-                        if (isChecked) {
-                            mGLSurfaceView.currTextureId = mGLSurfaceView.textureMIId;
-                        }
-                    }
-                }
-        );
-
-        //为RadioButton添加监听器及SxT选择代码
-        RadioButton rb = (RadioButton) findViewById(R.id.x11);
-        rb.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {//设置为纹理坐标SxT=1x1
-                            mGLSurfaceView.trIndex = 0;
-                        }
-                    }
-                }
-        );
-        rb = (RadioButton) findViewById(R.id.x42);
-        rb.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {//设置为纹理坐标SxT=4x2
-                            mGLSurfaceView.trIndex = 1;
-                        }
-                    }
-                }
-        );
-        rb = (RadioButton) findViewById(R.id.x44);
-        rb.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {//设置为纹理坐标SxT=4x4
-                            mGLSurfaceView.trIndex = 2;
-                        }
-                    }
-                }
-        );
-    }
 }
