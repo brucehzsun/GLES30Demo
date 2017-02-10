@@ -47,5 +47,6 @@ public class Constant {
         public static String EarthAndMoon = "EarthAndMoon";
         public static String pkm = "pkm";
         public static String point = "Point";
+        public static String texture3D = "texture3D";
     }
 }
