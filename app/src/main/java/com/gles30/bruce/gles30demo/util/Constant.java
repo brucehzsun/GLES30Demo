@@ -48,5 +48,6 @@ public class Constant {
         public static String pkm = "pkm";
         public static String point = "Point";
         public static String texture3D = "texture3D";
+        public static String much_img = "much_img";
     }
 }

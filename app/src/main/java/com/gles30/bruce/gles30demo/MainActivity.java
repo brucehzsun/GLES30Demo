@@ -67,6 +67,7 @@ public class MainActivity extends Activity {
         data.add(Constant.TextureType.pkm);
         data.add(Constant.TextureType.point);
         data.add(Constant.TextureType.texture3D);
+        data.add(Constant.TextureType.much_img);
         ListAdapter adapter = new ListAdapter(this, data);
         recyclerView3.setAdapter(adapter);
     }
