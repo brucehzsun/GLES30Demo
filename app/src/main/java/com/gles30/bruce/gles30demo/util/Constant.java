@@ -44,5 +44,6 @@ public class Constant {
         public static String texture_triangle = "texture_triangle";
         public static String texture_rect = "texture_rect";
         public static String texture_rect2 = "texture_rect2";
+        public static String EarthAndMoon = "EarthAndMoon";
     }
 }
