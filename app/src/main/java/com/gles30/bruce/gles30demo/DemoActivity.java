@@ -25,6 +25,7 @@ import com.gles30.bruce.gles30demo.surfaceview.light.BallDiffuseSurface;
 import com.gles30.bruce.gles30demo.surfaceview.light.BallDirectionSurface;
 import com.gles30.bruce.gles30demo.surfaceview.light.BallSpecularSurface;
 import com.gles30.bruce.gles30demo.surfaceview.texture.EarthAndMoonSurface;
+import com.gles30.bruce.gles30demo.surfaceview.texture.PointSurface;
 import com.gles30.bruce.gles30demo.surfaceview.texture.Texture2Surface;
 import com.gles30.bruce.gles30demo.surfaceview.texture.TextureRectSurface;
 import com.gles30.bruce.gles30demo.surfaceview.texture.PkmSurface;
@@ -132,6 +133,8 @@ public class DemoActivity extends Activity {
             surfaceView = new EarthAndMoonSurface(this);
         } else if (type.equals(Constant.TextureType.pkm)) {
             surfaceView = new PkmSurface(this);
+        } else if (type.equals(Constant.TextureType.point)) {
+            surfaceView = new PointSurface(this);
         }
         rootLayout.addView(surfaceView);
     }

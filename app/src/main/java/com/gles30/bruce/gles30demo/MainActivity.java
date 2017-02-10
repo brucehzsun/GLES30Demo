@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
         data.add(Constant.TextureType.texture_rect2);
         data.add(Constant.TextureType.EarthAndMoon);
         data.add(Constant.TextureType.pkm);
+        data.add(Constant.TextureType.point);
         ListAdapter adapter = new ListAdapter(this, data);
         recyclerView3.setAdapter(adapter);
     }
