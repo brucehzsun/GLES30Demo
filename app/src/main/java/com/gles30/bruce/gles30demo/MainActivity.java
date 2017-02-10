@@ -62,6 +62,7 @@ public class MainActivity extends Activity {
         ArrayList<String> data = new ArrayList<>();
         data.add(Constant.TextureType.texture_triangle);
         data.add(Constant.TextureType.texture_rect);
+        data.add(Constant.TextureType.texture_rect2);
         ListAdapter adapter = new ListAdapter(this, data);
         recyclerView3.setAdapter(adapter);
     }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_liner"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <RadioGroup
+        android:id="@+id/RadioGroup01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="采样方式："
+            android:textSize="16dip"></TextView>
+
+        <RadioButton
+            android:id="@+id/Radi01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="NN"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/Radi02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LL"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/Radi03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NL"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/Radi04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LN"></RadioButton>
+    </RadioGroup>
+</LinearLayout>
